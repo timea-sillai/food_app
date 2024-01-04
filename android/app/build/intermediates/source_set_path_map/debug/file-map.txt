@@ -39,4 +39,3 @@ com.recipesapp-debug-37 /Users/andreeanitu/Desktop/Foodapp/food_app/android/app/
 com.recipesapp-main-38 /Users/andreeanitu/Desktop/Foodapp/food_app/android/app/src/main/res
 com.recipesapp-packaged_res-39 /Users/andreeanitu/Desktop/Foodapp/food_app/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/debug
 com.recipesapp-packaged_res-40 /Users/andreeanitu/Desktop/Foodapp/food_app/node_modules/react-native-screens/android/build/intermediates/packaged_res/debug
-com.recipesapp-packaged_res-41 /Users/andreeanitu/Desktop/Foodapp/food_app/node_modules/react-native-splash-screen/android/build/intermediates/packaged_res/debug
