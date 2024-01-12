@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, Text, View } from "react-native";
-import { HomeScreenProps } from "../Navigation/NavigationTypes";
+import { HomeScreenProps } from "../navigation/NavigationTypes";
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
