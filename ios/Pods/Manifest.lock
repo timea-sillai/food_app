@@ -1145,6 +1145,7 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitReactPlugin (= 0.201.0)
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.201.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.201.0)
+  - FlipperKit/SKIOSNetworkPlugin (~> 0.201.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
@@ -1381,6 +1382,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 20d6a900dcc8d61d5e3b799bbf627cc34474a8c4
 
-PODFILE CHECKSUM: ba9509e47c2ccc6387930f97f6d06ecc5ed7643d
+PODFILE CHECKSUM: c2136895fee5ca317faa7675b83d35073ad5b816
 
 COCOAPODS: 1.14.3

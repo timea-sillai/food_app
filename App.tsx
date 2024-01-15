@@ -6,7 +6,7 @@ import store from "./src/redux/Store";
 export default function App() {
   return (
     <Provider store={store}>
-      <RootContainer />;
+      <RootContainer />
     </Provider>
   );
 }
