@@ -1,37 +1,25 @@
 import * as React from "react";
 import { Button, Text, View } from "react-native";
 import { HomeScreenProps } from "../navigation/navigationTypes";
-import { fetchPostsRequest } from "../actions/postsActions";
-import { RootState } from "../redux/reducers/RootReducer";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { IPost } from "../types/types";
+import { fetchCategories } from "../redux/actions/actions";
+import { Meal } from "../types/types";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const dispatch = useDispatch();
-  const { pending, posts, error } = useSelector(
-    (state: RootState) => state.posts
-  );
+  const categories = useSelector((state: any) => state.categories);
 
   React.useEffect(() => {
-    //dispatch(fetchPostsRequest());
-    //axios.get<IPost[]>("https://jsonplaceholder.typicode.com/todos")
-    fetchData();
+    dispatch(fetchCategories());
   }, []);
-
-  // Using the Fetch API
-  const fetchData = async () => {
-    try {
-      const response = await fetch(
-        "https://www.themealdb.com/api/json/v1/1/categories.php"
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
+  console.log(
+    "HERE ",
+    categories,
+    "Loading",
+    categories.loading,
+    " Error",
+    categories.error
+  );
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Home</Text>
@@ -40,14 +28,14 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         onPress={() => navigation.navigate("Categories", {})}
       ></Button>
       <View>
-        {pending ? (
+        {categories.loading ? (
           <Text>Loading...</Text>
-        ) : error ? (
+        ) : categories.error ? (
           <Text>Error</Text>
         ) : (
-          posts?.map((todo, index) => (
-            <Text key={todo.id}>
-              {++index}. {todo.title}
+          categories?.categories?.meals?.map((meal: Meal, index: number) => (
+            <Text key={index}>
+              {++index}. {meal.strCategory}
             </Text>
           ))
         )}
