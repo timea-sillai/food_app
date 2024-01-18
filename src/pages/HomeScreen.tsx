@@ -28,6 +28,25 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         title="Navigate to categories"
         onPress={() => navigation.navigate("Categories", {})}
       ></Button>
+      <View>
+        {categories?.loading ? (
+          <Text>Loading...</Text>
+        ) : categories?.error ? (
+          <Text>Error</Text>
+        ) : (
+          categories?.categories?.map((category: Category, index: number) => (
+            <View key={index}>
+              <Text> {category.strCategory}</Text>
+              <Image
+                style={{ width: "100%", height: "20%" }}
+                source={{
+                  uri: category.strCategoryThumb,
+                }}
+              ></Image>
+            </View>
+          ))
+        )}
+      </View>
     </View>
   );
 };
