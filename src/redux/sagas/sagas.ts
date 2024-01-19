@@ -58,6 +58,7 @@ function* searchMealSaga(action: Action) {
       action.payload
     );
     const searchResponse = response.data;
+    console.log("searchMealSaga ", response.data);
     yield put(setSearchMealResults(searchResponse, false));
   } catch (error: any) {
     yield put(setSearchMealResults(undefined, false, error.message));

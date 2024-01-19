@@ -6,6 +6,8 @@ import { Category, Meal } from "../types/types";
 import { fetchCategories } from "../redux/actions/categoriesActions";
 import { fetchRandomMeal } from "../redux/actions/mealsActions";
 import { searchMeal } from "../redux/actions/searchActions";
+import SearchBar from "../components/SearchBar";
+import { primary } from "../styles/styleGuide";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const dispatch = useDispatch();
@@ -16,36 +18,19 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   );
 
   React.useEffect(() => {
-    dispatch(fetchCategories());
-    dispatch(fetchRandomMeal());
-    dispatch(searchMeal("Arrabiata"));
+    //dispatch(fetchCategories());
+    //dispatch(fetchRandomMeal());
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home</Text>
-      <Button
-        title="Navigate to categories"
-        onPress={() => navigation.navigate("Categories", {})}
-      ></Button>
-      <View>
-        {categories?.loading ? (
-          <Text>Loading...</Text>
-        ) : categories?.error ? (
-          <Text>Error</Text>
-        ) : (
-          categories?.categories?.map((category: Category, index: number) => (
-            <View key={index}>
-              <Text> {category.strCategory}</Text>
-              <Image
-                style={{ width: "100%", height: "20%" }}
-                source={{
-                  uri: category.strCategoryThumb,
-                }}
-              ></Image>
-            </View>
-          ))
-        )}
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: primary.light_green,
+      }}
+    >
+      <View style={{ marginVertical: 30, marginHorizontal: 10 }}>
+        <SearchBar></SearchBar>
       </View>
     </View>
   );
