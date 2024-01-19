@@ -1,7 +1,10 @@
 import { Action, Category, Meal } from "../../types/types";
 import { SET_CATEGORIES } from "../actions/categoriesActions";
 import { SET_RANDOM_MEAL } from "../actions/mealsActions";
-import { SET_SEARCH_RESULTS } from "../actions/searchActions";
+import {
+  RESET_SEARCH_RESULTS,
+  SET_SEARCH_RESULTS,
+} from "../actions/searchActions";
 
 interface AppState {
   categories: Category[];
@@ -28,6 +31,11 @@ const rootReducer = (state = initialState, action: Action) => {
         randomMeal: action.payload,
       };
     case SET_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchMealResults: action.payload,
+      };
+    case RESET_SEARCH_RESULTS:
       return {
         ...state,
         searchMealResults: action.payload,
