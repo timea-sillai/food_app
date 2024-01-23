@@ -11,12 +11,8 @@ import {
 } from "react-native";
 import { primary } from "../styles/styleGuide";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  resetSearchResults,
-  searchMeal,
-  setSearchMealResults,
-} from "../redux/actions/searchActions";
-import { Meal } from "../types/types";
+import { resetSearchResults, searchMeal } from "../redux/actions/searchActions";
+import { dimensions } from "../styles/dimens";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -30,13 +26,29 @@ const SearchBar = () => {
     //todo clear search text
   };
 
-  console.log("HERE", searchMealResults?.searchResult?.meals);
+  const dispatchSearchMeal = (text: string) => {
+    dispatch(searchMeal(text));
+  };
+
+  const debounce = (func, delay: number) => {
+    let timeoutId;
+    return function (...args) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const debouncedDispatchSearchMeal = debounce(dispatchSearchMeal, 500);
 
   const handleSearch = (text: string) => {
     if (text.length === 0) {
       resetSearchBar();
     } else {
-      dispatch(searchMeal(text));
+      debouncedDispatchSearchMeal(text);
     }
   };
 
@@ -72,17 +84,15 @@ const SearchBar = () => {
         <View style={styles.verticalLine} />
         {searchMealResults?.loading ? (
           <View>
-            <ActivityIndicator size={30} color={primary.green} />
+            <ActivityIndicator
+              size={dimensions.searchBarIconsSize}
+              color={primary.green}
+            />
           </View>
         ) : (
-          <View style={{ width: 30, height: 30 }}>
-            {searchMealResults?.searchResult?.meals ? ( //TODO add
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+          <View style={styles.searchBarIconStyle}>
+            {searchMealResults?.searchResult?.meals ? (
+              <View style={styles.centerViewStyle}>
                 <TouchableOpacity onPress={resetSearchBar}>
                   <Image
                     source={require("../../assets/images/reject.png")}
@@ -134,6 +144,14 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: primary.greenDO,
     marginHorizontal: 10,
+  },
+  centerViewStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  searchBarIconStyle: {
+    width: dimensions.searchBarIconsSize,
+    height: dimensions.searchBarIconsSize,
   },
 });
 
