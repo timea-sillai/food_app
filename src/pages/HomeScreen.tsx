@@ -30,7 +30,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       }}
     >
       <View style={{ marginVertical: 30, marginHorizontal: 10 }}>
-        <SearchBar></SearchBar>
+        <SearchBar style={{ zIndex: 2 }}></SearchBar>
+        <Text>AGC</Text>
       </View>
     </View>
   );

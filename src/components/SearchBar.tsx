@@ -7,86 +7,134 @@ import {
   Image,
   ActivityIndicator,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import { primary } from "../styles/styleGuide";
 import { useDispatch, useSelector } from "react-redux";
-import { searchMeal } from "../redux/actions/searchActions";
+import {
+  resetSearchResults,
+  searchMeal,
+  setSearchMealResults,
+} from "../redux/actions/searchActions";
+import { Meal } from "../types/types";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const searchMealResults = useSelector(
     (state: any) => state.searchMealResults
   );
-  const [data, setData] = useState([
-    { id: "1", name: "Item 1" },
-    { id: "2", name: "Item 2" },
-    { id: "3", name: "Item 3" },
-    // Add more items as needed
-  ]);
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [number, onChangeNumber] = React.useState("");
+
+  const resetSearchBar = () => {
+    dispatch(resetSearchResults());
+    //todo clear search text
+  };
+
+  console.log("HERE", searchMealResults?.searchResult?.meals);
 
   const handleSearch = (text: string) => {
-    //dispatch(searchMeal(text));
-    // setSearchQuery(text);
-    // // Filter the data based on the search query
-    // const filteredData = data.filter((item) =>
-    //   item.name.toLowerCase().includes(text.toLowerCase())
-    // );
-    // // Update the data to show the filtered results
-    // setData(filteredData);
+    if (text.length === 0) {
+      resetSearchBar();
+    } else {
+      dispatch(searchMeal(text));
+    }
+  };
+
+  const handleOnSearchResultClicked = (item) => {
+    resetSearchBar();
   };
 
   const renderItem = ({ item }) => (
-    <View style={{ padding: 10 }}>
-      <Text>{item.name}</Text>
-    </View>
-  );
-
-  return (
-    <View>
+    <TouchableOpacity onPress={() => handleOnSearchResultClicked(item)}>
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          margin: 10,
-          padding: 8,
-          borderColor: primary.search_bar_border_color,
-          backgroundColor: primary.grey_light,
-          borderRadius: 10,
-          borderWidth: 1,
+          padding: 10,
         }}
       >
-        <TouchableOpacity onPress={() => handleSearch(searchQuery)}>
-          <Image
-            source={require("../../assets/images/black_search.png")}
-            style={{ width: 20, height: 20, marginHorizontal: 8 }}
-          />
-        </TouchableOpacity>
+        <Text>{item.strMeal}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+  return (
+    <View>
+      <View style={styles.mainViewStyle}>
+        <Image
+          source={require("../../assets/images/black_search.png")}
+          style={styles.searchImageStyle}
+        />
 
         <TextInput
-          style={{
-            flex: 1,
-            height: 40,
-          }}
+          style={styles.textInputStyle}
           placeholder="Search meals..."
-          //   onChangeText={handleSearch}
-          value={searchQuery}
+          onChangeText={handleSearch}
+          // value={number}
         />
+        <View style={styles.verticalLine} />
         {searchMealResults?.loading ? (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <ActivityIndicator size="large" color="#0000ff" />
+          <View>
+            <ActivityIndicator size={30} color={primary.green} />
           </View>
-        ) : null}
+        ) : (
+          <View style={{ width: 30, height: 30 }}>
+            {searchMealResults?.searchResult?.meals ? ( //TODO add
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity onPress={resetSearchBar}>
+                  <Image
+                    source={require("../../assets/images/reject.png")}
+                    style={styles.searchImageStyle}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : null}
+          </View>
+        )}
       </View>
       <FlatList
-        data={searchMealResults?.searchResponse}
-        keyExtractor={(item) => item.id.toString()}
+        style={styles.flatListStyle}
+        data={searchMealResults?.searchResult?.meals}
+        keyExtractor={(item) => item.idMeal.toString()}
         renderItem={renderItem}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  flatListStyle: {
+    zIndex: 2,
+    backgroundColor: primary.grey_light,
+    marginHorizontal: 10,
+  },
+  textInputStyle: {
+    flex: 1,
+    height: 44,
+  },
+  mainViewStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 10,
+    padding: 8,
+    borderColor: primary.search_bar_border_color,
+    backgroundColor: primary.grey_light,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  searchImageStyle: {
+    width: 20,
+    height: 20,
+    margin: 8,
+  },
+  verticalLine: {
+    height: "100%",
+    width: 1,
+    backgroundColor: primary.greenDO,
+    marginHorizontal: 10,
+  },
+});
 
 export default SearchBar;

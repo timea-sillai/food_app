@@ -9,7 +9,11 @@ import {
 } from "../../types/types";
 import { setCategories, FETCH_CATEGORIES } from "../actions/categoriesActions";
 import { setRandomMeal, FETCH_RANDOM_MEAL } from "../actions/mealsActions";
-import { setSearchMealResults, SEARCH_MEAL } from "../actions/searchActions";
+import {
+  setSearchMealResults,
+  SEARCH_MEAL,
+  RESET_SEARCH_RESULTS,
+} from "../actions/searchActions";
 
 //API call functions
 const fetchCategoriesApi = () =>
@@ -58,12 +62,16 @@ function* searchMealSaga(action: Action) {
       action.payload
     );
     const searchResponse = response.data;
-    console.log("searchMealSaga ", response.data);
+    // console.log("searchMealSaga ", response.data);
     yield put(setSearchMealResults(searchResponse, false));
   } catch (error: any) {
     yield put(setSearchMealResults(undefined, false, error.message));
     console.error("Error searching meals:", error);
   }
+}
+
+function* resetSearchResults() {
+  yield put(setSearchMealResults(undefined, false, undefined));
 }
 
 // Saga watcher function
@@ -72,6 +80,7 @@ function* rootSaga() {
   yield all([takeLatest(FETCH_CATEGORIES, fetchCategoriesSaga)]);
   yield all([takeLatest(FETCH_RANDOM_MEAL, fetchRandomMealSaga)]);
   yield all([takeLatest(SEARCH_MEAL, searchMealSaga)]);
+  yield all([takeLatest(RESET_SEARCH_RESULTS, resetSearchResults)]);
 }
 
 export default rootSaga;
