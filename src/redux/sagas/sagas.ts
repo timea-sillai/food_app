@@ -56,13 +56,13 @@ function* fetchRandomMealSaga() {
 
 function* searchMealSaga(action: Action) {
   try {
+    console.log("ASDF", action);
     yield put(setSearchMealResults(undefined, true));
     const response: AxiosResponse<SearchMealResponse> = yield call(
       searchMealApi,
       action.payload
     );
     const searchResponse = response.data;
-    // console.log("searchMealSaga ", response.data);
     yield put(setSearchMealResults(searchResponse, false));
   } catch (error: any) {
     yield put(setSearchMealResults(undefined, false, error.message));

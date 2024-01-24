@@ -4,7 +4,7 @@ export const SEARCH_MEAL = "SEARCH_MEAL";
 export const SET_SEARCH_RESULTS = "SET_SEARCH_RESULTS";
 export const RESET_SEARCH_RESULTS = "RESET_SEARCH_RESULTS";
 
-export const searchMeal = (mealName: string) => ({
+export const searchMeal = (mealName?: string) => ({
   type: SEARCH_MEAL,
   payload: mealName,
 });

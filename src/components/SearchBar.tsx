@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -13,51 +13,36 @@ import { primary } from "../styles/styleGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSearchResults, searchMeal } from "../redux/actions/searchActions";
 import { dimensions } from "../styles/dimens";
+import { Meal } from "../types/types";
+import { useDebounce } from "../hooks";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const searchMealResults = useSelector(
     (state: any) => state.searchMealResults
   );
-  // const [number, onChangeNumber] = React.useState("");
+  const [textValue, onChangeText] = useState<string | undefined>(undefined);
+  const debouncedDispatchSearchMeal = useDebounce(textValue, 500);
 
   const resetSearchBar = () => {
-    dispatch(resetSearchResults());
-    //todo clear search text
+    onChangeText(undefined);
+    dispatch(searchMeal(undefined));
   };
 
-  const dispatchSearchMeal = (text: string) => {
+  const dispatchSearchMeal = (text?: string) => {
     dispatch(searchMeal(text));
   };
 
-  const debounce = (func, delay: number) => {
-    let timeoutId;
-    return function (...args) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  };
-
-  const debouncedDispatchSearchMeal = debounce(dispatchSearchMeal, 500);
+  useEffect(() => {
+    dispatchSearchMeal(debouncedDispatchSearchMeal);
+  }, [debouncedDispatchSearchMeal]);
 
   const handleSearch = (text: string) => {
-    if (text.length === 0) {
-      resetSearchBar();
-    } else {
-      debouncedDispatchSearchMeal(text);
-    }
+    onChangeText(text);
   };
 
-  const handleOnSearchResultClicked = (item) => {
-    resetSearchBar();
-  };
-
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleOnSearchResultClicked(item)}>
+  const renderItem = ({ item }: { item: Meal }) => (
+    <TouchableOpacity onPress={() => resetSearchBar()}>
       <View
         style={{
           padding: 10,
@@ -67,6 +52,7 @@ const SearchBar = () => {
       </View>
     </TouchableOpacity>
   );
+
   return (
     <View>
       <View style={styles.mainViewStyle}>
@@ -79,7 +65,7 @@ const SearchBar = () => {
           style={styles.textInputStyle}
           placeholder="Search meals..."
           onChangeText={handleSearch}
-          // value={number}
+          value={textValue}
         />
         <View style={styles.verticalLine} />
         {searchMealResults?.loading ? (
@@ -104,7 +90,7 @@ const SearchBar = () => {
           </View>
         )}
       </View>
-      <FlatList
+      <FlatList<Meal>
         style={styles.flatListStyle}
         data={searchMealResults?.searchResult?.meals}
         keyExtractor={(item) => item.idMeal.toString()}
