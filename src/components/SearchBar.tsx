@@ -12,7 +12,7 @@ import {
 import { primary } from "../styles/styleGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { searchMeal } from "../redux/actions/searchActions";
-import { dimensions } from "../styles/dimens";
+import { dimensions } from "../styles/branding";
 import { Meal } from "../types/types";
 import { useDebounce } from "../hooks";
 
@@ -21,18 +21,16 @@ const SearchBar = () => {
   const searchMealResults = useSelector(
     (state: any) => state.searchMealResults
   );
-  const [textValue, onChangeText] = useState<string | undefined>(undefined);
+  const [textValue, onChangeText] = useState<string>("");
   const debouncedDispatchSearchMeal = useDebounce(textValue, 500);
 
   const resetSearchBar = () => {
-    onChangeText(undefined);
-    dispatch(searchMeal(undefined));
+    onChangeText("");
+    dispatch(searchMeal(""));
   };
 
-  const dispatchSearchMeal = (text?: string) => {
-    if (text?.length != 0) {
-      dispatch(searchMeal(text));
-    } else resetSearchBar();
+  const dispatchSearchMeal = (text: string) => {
+    dispatch(searchMeal(text));
   };
 
   useEffect(() => {
@@ -73,7 +71,7 @@ const SearchBar = () => {
         {searchMealResults?.loading ? (
           <View>
             <ActivityIndicator
-              size={dimensions.searchBarIconsSize}
+              size={dimensions.loadingSize}
               color={primary.green}
             />
           </View>
@@ -104,7 +102,6 @@ const SearchBar = () => {
 
 const styles = StyleSheet.create({
   flatListStyle: {
-    zIndex: 2,
     backgroundColor: primary.grey_light,
     marginHorizontal: 10,
   },

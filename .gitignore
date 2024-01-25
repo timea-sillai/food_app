@@ -188,7 +188,10 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
- 
+   
+android/
+.gradle
+
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
  
