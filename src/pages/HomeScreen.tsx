@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HomeScreenProps } from "../navigation/navigationTypes";
 import SearchBar from "../components/SearchBar";
 import { primary } from "../styles/styleGuide";
