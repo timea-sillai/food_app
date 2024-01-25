@@ -21,6 +21,7 @@
     "react-native-axios": "^0.17.1",
     "react-native-safe-area-context": "^4.8.1",
     "react-native-screens": "^3.29.0",
+    "react-native-skeleton-content": "^1.0.28",
     "react-redux": "^9.0.4",
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
