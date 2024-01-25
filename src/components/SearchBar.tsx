@@ -12,27 +12,25 @@ import {
 import { primary } from "../styles/styleGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { searchMeal } from "../redux/actions/searchActions";
-import { dimensions } from "../styles/dimens";
 import { Meal } from "../types/types";
 import { useDebounce } from "../hooks";
+import Loading from "./Loading";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const searchMealResults = useSelector(
     (state: any) => state.searchMealResults
   );
-  const [textValue, onChangeText] = useState<string | undefined>(undefined);
+  const [textValue, onChangeText] = useState<string>("");
   const debouncedDispatchSearchMeal = useDebounce(textValue, 500);
 
   const resetSearchBar = () => {
-    onChangeText(undefined);
-    dispatch(searchMeal(undefined));
+    onChangeText("");
+    dispatch(searchMeal(""));
   };
 
-  const dispatchSearchMeal = (text?: string) => {
-    if (text?.length != 0) {
-      dispatch(searchMeal(text));
-    } else resetSearchBar();
+  const dispatchSearchMeal = (text: string) => {
+    dispatch(searchMeal(text));
   };
 
   useEffect(() => {
@@ -71,12 +69,7 @@ const SearchBar = () => {
         />
         <View style={styles.verticalLine} />
         {searchMealResults?.loading ? (
-          <View>
-            <ActivityIndicator
-              size={dimensions.searchBarIconsSize}
-              color={primary.green}
-            />
-          </View>
+          <Loading />
         ) : (
           <View style={styles.searchBarIconStyle}>
             {searchMealResults?.searchResult?.meals ? (
@@ -104,7 +97,6 @@ const SearchBar = () => {
 
 const styles = StyleSheet.create({
   flatListStyle: {
-    zIndex: 2,
     backgroundColor: primary.grey_light,
     marginHorizontal: 10,
   },
@@ -138,8 +130,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   searchBarIconStyle: {
-    width: dimensions.searchBarIconsSize,
-    height: dimensions.searchBarIconsSize,
+    width: 30,
+    height: 30,
   },
 });
 
