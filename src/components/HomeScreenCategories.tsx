@@ -13,10 +13,12 @@ import { primary } from "../styles/styleGuide";
 import { generalStyles } from "../styles/generalStyleSheet";
 import mealService from "../services";
 import Loading from "./Loading";
+import { useTranslation } from "react-i18next";
 
 const HomeScreenCategories = () => {
   const [categories, onChangeCategories] = useState<FetchCategoriesResponse>();
   const [isLoading, setLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const renderItem = ({ item }: { item: Category }) => (
     <View style={styles.itemStyle}>
@@ -49,7 +51,7 @@ const HomeScreenCategories = () => {
 
   return (
     <View>
-      <Text style={generalStyles.fontStyle}>Categories</Text>
+      <Text style={generalStyles.fontStyle}>{t("categories")}</Text>
       {isLoading ? (
         <Loading />
       ) : (
@@ -82,5 +84,9 @@ const styles = StyleSheet.create({
   },
   renderItemTextStyle: {
     backgroundColor: primary.white,
+    borderRadius: 5,
+  },
+  contentContainer: {
+    paddingStart: 10,
   },
 });

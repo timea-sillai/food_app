@@ -4,7 +4,6 @@ import {
   TextInput,
   FlatList,
   Text,
-  Image,
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
@@ -15,8 +14,12 @@ import { searchMeal } from "../redux/actions/searchActions";
 import { Meal } from "../types/types";
 import { useDebounce } from "../hooks";
 import Loading from "./Loading";
+import { Exit, Search } from "../utils/svg";
+import { useTranslation } from "react-i18next";
+import { generalStyles } from "../styles/generalStyleSheet";
 
 const SearchBar = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const searchMealResults = useSelector(
     (state: any) => state.searchMealResults
@@ -48,7 +51,7 @@ const SearchBar = () => {
           padding: 10,
         }}
       >
-        <Text>{item.strMeal}</Text>
+        <Text style={{ color: primary.black }}>{item.strMeal}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -56,14 +59,12 @@ const SearchBar = () => {
   return (
     <View>
       <View style={styles.mainViewStyle}>
-        <Image
-          source={require("../../assets/images/black_search.png")}
-          style={styles.searchImageStyle}
-        />
+        <Search width={20} height={20} style={{ margin: 8 }} />
 
         <TextInput
           style={styles.textInputStyle}
-          placeholder="Search meals..."
+          placeholder={t("searchMeals")}
+          placeholderTextColor={primary.black}
           onChangeText={handleSearch}
           value={textValue}
         />
@@ -75,10 +76,7 @@ const SearchBar = () => {
             {searchMealResults?.searchResult?.meals ? (
               <View style={styles.centerViewStyle}>
                 <TouchableOpacity onPress={resetSearchBar}>
-                  <Image
-                    source={require("../../assets/images/reject.png")}
-                    style={styles.searchImageStyle}
-                  />
+                  <Exit width={20} height={20}></Exit>
                 </TouchableOpacity>
               </View>
             ) : null}
@@ -103,6 +101,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1,
     height: 44,
+    color: primary.black,
   },
   mainViewStyle: {
     flexDirection: "row",
