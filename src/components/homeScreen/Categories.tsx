@@ -23,7 +23,7 @@ const HomeScreenCategories = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const renderItem = ({ item }: { item: Category }) => (
     <View style={styles.itemStyle}>
-      <TouchableOpacity onPress={onClick}>
+      <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
         <Image
           source={{ uri: item.strCategoryThumb }}
           style={styles.imageStyle}
@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 74,
     height: 63,
-    elevation: 1,
     backgroundColor: primary.light_green,
     borderRadius: 5,
   },

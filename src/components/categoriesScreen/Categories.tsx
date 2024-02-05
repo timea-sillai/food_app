@@ -5,51 +5,43 @@ import {
   Text,
   Image,
   StyleSheet,
-  ActivityIndicator,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import { FetchRandomMealResponse, Meal } from "../../types/types";
+import { Category, FetchCategoriesResponse } from "../../types/types";
 import businessManagerService from "../../services";
 import { dimensions } from "../../styles/branding";
 import { primary } from "../../styles/styleGuide";
-import { useIsFocused } from "@react-navigation/native";
-import Constants from "../../utils/constants";
 import { generalStyles } from "../../styles/generalStyleSheet";
 
-const RandomMealsList = () => {
-  const [ramdomMeals, onChangeRandomMeals] = useState<Set<Meal>>(new Set());
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const isFocused = useIsFocused();
+const onClick = () => {};
 
-  const renderItem = ({ item }: { item: Meal }) => (
+const HomeScreenCategories = () => {
+  const [categories, onChangeCategories] = useState<
+    FetchCategoriesResponse | undefined
+  >(undefined);
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  const renderItem = ({ item }: { item: Category }) => (
     <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
       <View style={styles.itemStyle}>
         <Image
-          source={{ uri: item.strMealThumb }}
+          source={{ uri: item.strCategoryThumb }}
           style={styles.imageStyle}
           resizeMode="cover"
         ></Image>
         <View style={styles.textViewStyle}>
-          <Text style={[generalStyles.fontStyle, styles.textStyle]}>
-            {item.strMeal}
-          </Text>
+          <Text style={[generalStyles.fontStyle]}>{item.strCategory}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 
-  const getRandomMeal = async () => {
+  const getCategories = async () => {
     try {
       setLoading(true);
-      const response: FetchRandomMealResponse =
-        await businessManagerService.fetchRandomMealApi();
-      response?.meals.map((meal) => {
-        onChangeRandomMeals((prevSet) => {
-          const newSet = new Set(prevSet);
-          newSet.add(meal);
-          return newSet;
-        });
-      });
+      const response = await businessManagerService.fetchCategoriesApi();
+      onChangeCategories(response);
     } catch (e) {
       console.error("[ CATEGORIES]", e);
     } finally {
@@ -58,36 +50,31 @@ const RandomMealsList = () => {
   };
 
   useEffect(() => {
-    onChangeRandomMeals(new Set());
-    for (let i = 1; i <= Constants.RANDOM_MEALS_SIZE; i++) {
-      getRandomMeal();
-    }
-  }, [isFocused]);
+    getCategories();
+  }, []);
 
   return (
     <View>
+      <Text style={generalStyles.fontStyle}>Categories</Text>
       {isLoading ? (
-        <View style={{ flex: 1, padding: 200 }}>
+        <View style={generalStyles.loadingStyle}>
           <ActivityIndicator
             size={dimensions.loadingSize}
             color={primary.green}
           />
         </View>
       ) : (
-        <View>
-          <FlatList<Meal>
-            data={Array.from(ramdomMeals)}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.idMeal}
-            scrollEnabled={false}
-          ></FlatList>
-        </View>
+        <FlatList<Category>
+          data={categories?.categories}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.idCategory}
+        />
       )}
     </View>
   );
 };
 
-export default RandomMealsList;
+export default HomeScreenCategories;
 
 const styles = StyleSheet.create({
   itemStyle: {
@@ -106,13 +93,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 110,
   },
-  textStyle: {
-    fontSize: 20,
-  },
   textViewStyle: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
 });
-function onClick(): void {}

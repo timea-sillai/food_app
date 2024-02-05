@@ -15,6 +15,7 @@ import { searchMeal } from "../redux/actions/searchActions";
 import { dimensions } from "../styles/branding";
 import { Meal } from "../types/types";
 import { useDebounce } from "../hooks";
+import { Exit, Search } from "../utils/svg";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -56,10 +57,7 @@ const SearchBar = () => {
   return (
     <View>
       <View style={styles.mainViewStyle}>
-        <Image
-          source={require("../../assets/images/black_search.png")}
-          style={styles.searchImageStyle}
-        />
+        <Search width={20} height={20} style={{ margin: 8 }} />
 
         <TextInput
           style={styles.textInputStyle}
@@ -80,10 +78,7 @@ const SearchBar = () => {
             {searchMealResults?.searchResult?.meals ? (
               <View style={styles.centerViewStyle}>
                 <TouchableOpacity onPress={resetSearchBar}>
-                  <Image
-                    source={require("../../assets/images/reject.png")}
-                    style={styles.searchImageStyle}
-                  />
+                  <Exit width={20} height={20}></Exit>
                 </TouchableOpacity>
               </View>
             ) : null}
