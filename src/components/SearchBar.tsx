@@ -4,7 +4,6 @@ import {
   TextInput,
   FlatList,
   Text,
-  Image,
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
@@ -16,8 +15,10 @@ import { dimensions } from "../styles/branding";
 import { Meal } from "../types/types";
 import { useDebounce } from "../hooks";
 import { Exit, Search } from "../utils/svg";
+import { useTranslation } from "react-i18next";
 
 const SearchBar = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const searchMealResults = useSelector(
     (state: any) => state.searchMealResults
@@ -61,7 +62,7 @@ const SearchBar = () => {
 
         <TextInput
           style={styles.textInputStyle}
-          placeholder="Search meals..."
+          placeholder={t("searchMeals")}
           onChangeText={handleSearch}
           value={textValue}
         />

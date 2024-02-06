@@ -13,10 +13,12 @@ import businessManagerService from "../../services";
 import { dimensions } from "../../styles/branding";
 import { primary } from "../../styles/styleGuide";
 import { generalStyles } from "../../styles/generalStyleSheet";
+import { useTranslation } from "react-i18next";
 
 const onClick = () => {};
 
 const HomeScreenCategories = () => {
+  const { t } = useTranslation();
   const [categories, onChangeCategories] = useState<
     FetchCategoriesResponse | undefined
   >(undefined);
@@ -55,7 +57,7 @@ const HomeScreenCategories = () => {
 
   return (
     <View>
-      <Text style={generalStyles.fontStyle}>Categories</Text>
+      <Text style={generalStyles.fontStyle}>{t("categories")}</Text>
       {isLoading ? (
         <View style={generalStyles.loadingStyle}>
           <ActivityIndicator

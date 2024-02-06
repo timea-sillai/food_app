@@ -55,7 +55,6 @@ const HomeScreenCategories = () => {
 
   return (
     <View>
-      <Text style={generalStyles.fontStyle}>Categories</Text>
       {isLoading ? (
         <View style={generalStyles.loadingStyle}>
           <ActivityIndicator
