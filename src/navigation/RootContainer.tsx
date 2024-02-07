@@ -1,6 +1,9 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  createBottomTabNavigator,
+  useBottomTabBarHeight,
+} from "@react-navigation/bottom-tabs";
 import { BottomTabParamList } from "./NavigationTypes";
 import HomeScreen from "../pages/HomeScreen";
 import CategoriesScreen from "../pages/CategoriesScreen";
@@ -9,6 +12,7 @@ import ProfileScreen from "../pages/ProfileScreen";
 import { Image, StyleSheet, Text } from "react-native";
 import { primary } from "../styles/styleGuide";
 import { Bag, Category, Home, Profile } from "../utils/svg";
+import { useState } from "react";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const tabBarLabel = (focused: boolean, name: string, icon?: string) => {
@@ -24,6 +28,7 @@ export default function RootContainer() {
           tabBarStyle: styles.tabBarStyle,
           tabBarLabelStyle: styles.tabBarLabelStyle,
           tabBarLabel: ({ focused }) => tabBarLabel(focused, route.name),
+          tabBarHideOnKeyboard: true,
         })}
       >
         <Tab.Screen

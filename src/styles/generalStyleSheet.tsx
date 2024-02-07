@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
+import { primary } from "./styleGuide";
+import { dimensions } from "./branding";
 
 export const generalStyles = StyleSheet.create({
   loadingStyle: {
@@ -12,6 +14,12 @@ export const generalStyles = StyleSheet.create({
     fontWeight: "bold",
     marginHorizontal: 16,
     marginVertical: 8,
+    color: primary.black,
     fontFamily: "Lato, sans-serif",
+  },
+  mainViewStyle: {
+    marginTop: Platform.OS === "ios" ? 30 : 0,
+    paddingBottom: dimensions.tabBarSize,
+    backgroundColor: primary.light_green,
   },
 });

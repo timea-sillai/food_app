@@ -31,31 +31,53 @@ const HomeScreenCategories = () => {
   const renderItem = ({ item, index }: FlatListProps) => {
     const isItemPositionEven = index % 2 === 0;
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={onClick}
+        style={{ marginLeft: 50, marginRight: 50 }}
+      >
         <View
           style={[
             styles.container,
             {
               flexDirection: isItemPositionEven ? "row" : "row-reverse",
-              borderTopLeftRadius: isItemPositionEven ? 0 : 75,
-              borderBottomLeftRadius: isItemPositionEven ? 0 : 75,
-              borderTopRightRadius: isItemPositionEven ? 75 : 0,
-              borderBottomRightRadius: isItemPositionEven ? 75 : 0,
+              elevation: 10,
             },
           ]}
         >
-          <Text style={styles.text}>{item.strCategory}</Text>
+          <View
+            style={[
+              styles.textItemViewStyle,
+              {
+                marginLeft: isItemPositionEven ? 50 : 0,
+                marginRight: isItemPositionEven ? 0 : 50,
+              },
+            ]}
+          >
+            <CategoryBackground
+              style={styles.categoryBackgroundStyle}
+              width="100%"
+              height="100%"
+            ></CategoryBackground>
+            <Text
+              style={[
+                styles.text,
+                {
+                  marginLeft: isItemPositionEven ? 50 : 0,
+                  marginRight: isItemPositionEven ? 0 : 50,
+                },
+              ]}
+            >
+              {item.strCategory}
+            </Text>
+          </View>
+
           <View style={styles.imageContainer}>
             <Image
               source={{ uri: item.strCategoryThumb }}
               style={styles.image}
             />
           </View>
-          <CategoryBackground
-            style={{ position: "absolute", top: 0, left: 0 }}
-            width="100%"
-            height="100%"
-          ></CategoryBackground>
         </View>
       </TouchableOpacity>
     );
@@ -91,6 +113,7 @@ const HomeScreenCategories = () => {
           data={categories?.categories}
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
+          contentContainerStyle={styles.contentContainer}
         />
       )}
     </View>
@@ -125,12 +148,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row-reverse",
     alignItems: "center",
-    margin: 10,
-    backgroundColor: primary.light_green,
   },
   text: {
+    fontSize: 20,
+    fontWeight: "bold",
     flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
     textAlign: "center",
+    color: primary.black,
+    marginTop: 30,
   },
   image: {
     width: "100%",
@@ -138,14 +165,33 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   imageContainer: {
-    width: 150, // Adjust as needed
-    height: 150, // Adjust as needed
-    borderRadius: 75, // Half of width and height to make it circular
-    overflow: "hidden", // This ensures the image is clipped to the rounded shape
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    overflow: "hidden",
     backgroundColor: primary.white,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: primary.search_bar_border_color,
+    borderColor: primary.greenDO,
     borderWidth: 5,
+  },
+  contentContainer: {
+    paddingTop: 20,
+  },
+  categoryBackgroundStyle: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    backgroundColor: primary.light_green,
+  },
+  textItemViewStyle: {
+    flex: 1,
+    marginVertical: 50,
+    zIndex: 0,
+    width: "100%",
+    height: 100,
+    position: "absolute",
+    alignContent: "center",
+    justifyContent: "center",
   },
 });

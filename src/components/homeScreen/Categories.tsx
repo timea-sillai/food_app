@@ -71,6 +71,7 @@ const HomeScreenCategories = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
           horizontal={true}
+          contentContainerStyle={styles.contentContainer}
         />
       )}
     </View>
@@ -91,5 +92,8 @@ const styles = StyleSheet.create({
     height: 63,
     backgroundColor: primary.light_green,
     borderRadius: 5,
+  },
+  contentContainer: {
+    paddingStart: 10,
   },
 });
