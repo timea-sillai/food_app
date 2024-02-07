@@ -105,6 +105,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 110,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   textStyle: {
     fontSize: 20,

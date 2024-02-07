@@ -4,7 +4,7 @@ import Categories from "../components/categoriesScreen/Categories";
 
 export default function CategoriesScreen() {
   return (
-    <View>
+    <View style={{ backgroundColor: "red" }}>
       <Categories></Categories>
     </View>
   );

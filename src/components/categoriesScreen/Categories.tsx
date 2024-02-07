@@ -13,6 +13,7 @@ import businessManagerService from "../../services";
 import { dimensions } from "../../styles/branding";
 import { primary } from "../../styles/styleGuide";
 import { generalStyles } from "../../styles/generalStyleSheet";
+import { CategoryBackground } from "../../utils/svg";
 
 const onClick = () => {};
 
@@ -22,20 +23,43 @@ const HomeScreenCategories = () => {
   >(undefined);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const renderItem = ({ item }: { item: Category }) => (
-    <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
-      <View style={styles.itemStyle}>
-        <Image
-          source={{ uri: item.strCategoryThumb }}
-          style={styles.imageStyle}
-          resizeMode="cover"
-        ></Image>
-        <View style={styles.textViewStyle}>
-          <Text style={[generalStyles.fontStyle]}>{item.strCategory}</Text>
+  interface FlatListProps {
+    item: Category;
+    index: number;
+  }
+
+  const renderItem = ({ item, index }: FlatListProps) => {
+    const isItemPositionEven = index % 2 === 0;
+    return (
+      <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
+        <View
+          style={[
+            styles.container,
+            {
+              flexDirection: isItemPositionEven ? "row" : "row-reverse",
+              borderTopLeftRadius: isItemPositionEven ? 0 : 75,
+              borderBottomLeftRadius: isItemPositionEven ? 0 : 75,
+              borderTopRightRadius: isItemPositionEven ? 75 : 0,
+              borderBottomRightRadius: isItemPositionEven ? 75 : 0,
+            },
+          ]}
+        >
+          <Text style={styles.text}>{item.strCategory}</Text>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: item.strCategoryThumb }}
+              style={styles.image}
+            />
+          </View>
+          <CategoryBackground
+            style={{ position: "absolute", top: 0, left: 0 }}
+            width="100%"
+            height="100%"
+          ></CategoryBackground>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   const getCategories = async () => {
     try {
@@ -96,5 +120,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  container: {
+    flex: 1,
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    margin: 10,
+    backgroundColor: primary.light_green,
+  },
+  text: {
+    flex: 1,
+    textAlign: "center",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  imageContainer: {
+    width: 150, // Adjust as needed
+    height: 150, // Adjust as needed
+    borderRadius: 75, // Half of width and height to make it circular
+    overflow: "hidden", // This ensures the image is clipped to the rounded shape
+    backgroundColor: primary.white,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: primary.search_bar_border_color,
+    borderWidth: 5,
   },
 });
