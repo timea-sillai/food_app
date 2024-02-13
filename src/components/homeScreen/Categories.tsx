@@ -14,8 +14,8 @@ import { dimensions } from "../../styles/branding";
 import { primary } from "../../styles/styleGuide";
 import { generalStyles } from "../../styles/generalStyleSheet";
 import { useTranslation } from "react-i18next";
-
-const onClick = () => {};
+import { CategoryDetailsNavigationProps } from "../../navigation/NavigationTypes";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreenCategories = () => {
   const { t } = useTranslation();
@@ -23,9 +23,20 @@ const HomeScreenCategories = () => {
     FetchCategoriesResponse | undefined
   >(undefined);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const navigation = useNavigation<CategoryDetailsNavigationProps>();
+
+  const onCategorySelected = (category: Category) => {
+    navigation.navigate("CategoryDetails", {
+      categoryName: category.strCategory,
+    });
+  };
+
   const renderItem = ({ item }: { item: Category }) => (
     <View style={styles.itemStyle}>
-      <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => onCategorySelected(item)}
+      >
         <Image
           source={{ uri: item.strCategoryThumb }}
           style={styles.imageStyle}

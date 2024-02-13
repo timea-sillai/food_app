@@ -6,21 +6,24 @@ import { useTranslation } from "react-i18next";
 import { CategoryBackground } from "../utils/svg";
 import { dimensions } from "../styles/branding";
 import { generalStyles } from "../styles/generalStyleSheet";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function CategoriesScreen() {
   const { t } = useTranslation();
   return (
     <View style={[generalStyles.mainViewStyle, styles.mainViewStyle]}>
-      <CategoryBackground
-        style={styles.backgroundStyle}
-        width="100%"
-        height="30%"
-      ></CategoryBackground>
+      <ScrollView>
+        <CategoryBackground
+          style={styles.backgroundStyle}
+          width="100%"
+          height="200"
+        ></CategoryBackground>
 
-      <Text style={[styles.textStyle]}>{t("categories")}</Text>
-      <View style={styles.categoriesViewStyle}>
-        <Categories></Categories>
-      </View>
+        <Text style={[styles.textStyle]}>{t("categories")}</Text>
+        <View style={styles.categoriesViewStyle}>
+          <Categories></Categories>
+        </View>
+      </ScrollView>
     </View>
   );
 }

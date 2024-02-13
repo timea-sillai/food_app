@@ -79,6 +79,7 @@ const RandomMealsList = () => {
             data={Array.from(ramdomMeals)}
             renderItem={renderItem}
             keyExtractor={(item) => item.idMeal}
+            scrollEnabled={false}
           ></FlatList>
         </View>
       )}

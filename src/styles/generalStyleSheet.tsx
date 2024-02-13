@@ -19,7 +19,6 @@ export const generalStyles = StyleSheet.create({
   },
   mainViewStyle: {
     marginTop: Platform.OS === "ios" ? 30 : 0,
-    paddingBottom: dimensions.tabBarSize,
     backgroundColor: primary.light_green,
   },
 });

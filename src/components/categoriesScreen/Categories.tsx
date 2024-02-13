@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -14,26 +14,39 @@ import { dimensions } from "../../styles/branding";
 import { primary } from "../../styles/styleGuide";
 import { generalStyles } from "../../styles/generalStyleSheet";
 import { CategoryBackground } from "../../utils/svg";
-
-const onClick = () => {};
+import {
+  CategoryDetailsNavigationProps,
+  HomeScreenProps,
+} from "../../navigation/NavigationTypes";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreenCategories = () => {
+  const navigation = useNavigation<CategoryDetailsNavigationProps>();
+
   const [categories, onChangeCategories] = useState<
     FetchCategoriesResponse | undefined
   >(undefined);
-  const [isLoading, setLoading] = useState<boolean>(false);
 
+  const [isLoading, setLoading] = useState<boolean>(false);
   interface FlatListProps {
     item: Category;
     index: number;
   }
+
+  const onCategorySelected = (category: Category) => {
+    navigation.navigate("CategoryDetails", {
+      categoryName: category.strCategory,
+    });
+  };
 
   const renderItem = ({ item, index }: FlatListProps) => {
     const isItemPositionEven = index % 2 === 0;
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={onClick}
+        onPress={() => {
+          onCategorySelected(item);
+        }}
         style={{ marginLeft: 50, marginRight: 50 }}
       >
         <View
@@ -114,6 +127,7 @@ const HomeScreenCategories = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
           contentContainerStyle={styles.contentContainer}
+          scrollEnabled={false}
         />
       )}
     </View>

@@ -6,26 +6,29 @@ import { primary } from "../styles/styleGuide";
 import HomeScreenCategories from "../components/homeScreen/Categories";
 import RandomMealsList from "../components/homeScreen/RandomMeals";
 import { generalStyles } from "../styles/generalStyleSheet";
+import { ScrollView } from "react-native-gesture-handler";
 
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+const HomeScreen = () => {
   return (
     <View style={[style.mainViewStyle, generalStyles.mainViewStyle]}>
-      <View style={style.searchViewStyle}>
-        <SearchBar></SearchBar>
-      </View>
-      <View
-        style={{
-          backgroundColor: primary.white,
-          paddingTop: 16,
-          elevation: 2,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          height: "100%",
-        }}
-      >
-        <HomeScreenCategories />
-        <RandomMealsList />
-      </View>
+      <ScrollView>
+        <View style={style.searchViewStyle}>
+          <SearchBar></SearchBar>
+        </View>
+        <View
+          style={{
+            backgroundColor: primary.white,
+            paddingTop: 16,
+            elevation: 2,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            height: "100%",
+          }}
+        >
+          <HomeScreenCategories />
+          <RandomMealsList />
+        </View>
+      </ScrollView>
     </View>
   );
 };
