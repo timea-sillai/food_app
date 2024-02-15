@@ -16,6 +16,7 @@ import { useDebounce } from "../hooks";
 import Loading from "./Loading";
 import { Exit, Search } from "../utils/svg";
 import { useTranslation } from "react-i18next";
+import { generalStyles } from "../styles/generalStyleSheet";
 
 const SearchBar = () => {
   const { t } = useTranslation();

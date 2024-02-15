@@ -6,23 +6,39 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { Category, FetchCategoriesResponse } from "../types/types";
+import businessManagerService from "../services";
 import { paddings } from "../styles/branding";
 import { primary } from "../styles/styleGuide";
 import { generalStyles } from "../styles/generalStyleSheet";
-import mealService from "../services";
-import Loading from "./Loading";
 import { useTranslation } from "react-i18next";
+import { CategoryDetailsNavigationProps } from "../navigation/NavigationTypes";
+import { useNavigation } from "@react-navigation/native";
+import Loading from "./Loading";
+import mealService from "../services";
 
 const HomeScreenCategories = () => {
-  const [categories, onChangeCategories] = useState<FetchCategoriesResponse>();
-  const [isLoading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
+  const [categories, onChangeCategories] = useState<
+    FetchCategoriesResponse | undefined
+  >(undefined);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const navigation = useNavigation<CategoryDetailsNavigationProps>();
+
+  const onCategorySelected = (category: Category) => {
+    navigation.navigate("CategoryDetails", {
+      categoryName: category.strCategory,
+    });
+  };
 
   const renderItem = ({ item }: { item: Category }) => (
     <View style={styles.itemStyle}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => onCategorySelected(item)}
+      >
         <Image
           source={{ uri: item.strCategoryThumb }}
           style={styles.imageStyle}
@@ -60,6 +76,7 @@ const HomeScreenCategories = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
           horizontal={true}
+          contentContainerStyle={styles.contentContainer}
         />
       )}
     </View>
