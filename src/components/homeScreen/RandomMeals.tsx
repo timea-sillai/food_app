@@ -22,7 +22,7 @@ const RandomMealsList = () => {
   const isFocused = useIsFocused();
 
   const renderItem = ({ item }: { item: Meal }) => (
-    <TouchableOpacity onPress={onClick}>
+    <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
       <View style={styles.itemStyle}>
         <Image
           source={{ uri: item.strMealThumb }}
@@ -79,7 +79,6 @@ const RandomMealsList = () => {
             data={Array.from(ramdomMeals)}
             renderItem={renderItem}
             keyExtractor={(item) => item.idMeal}
-            scrollEnabled={false}
           ></FlatList>
         </View>
       )}
@@ -100,12 +99,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: primary.search_bar_border_color,
     backgroundColor: primary.light_green,
-    elevation: 2,
   },
   imageStyle: {
     flex: 1,
     width: "100%",
     height: 110,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   textStyle: {
     fontSize: 20,

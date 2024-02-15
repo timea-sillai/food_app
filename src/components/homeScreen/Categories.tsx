@@ -13,17 +13,19 @@ import businessManagerService from "../../services";
 import { dimensions } from "../../styles/branding";
 import { primary } from "../../styles/styleGuide";
 import { generalStyles } from "../../styles/generalStyleSheet";
+import { useTranslation } from "react-i18next";
 
 const onClick = () => {};
 
 const HomeScreenCategories = () => {
+  const { t } = useTranslation();
   const [categories, onChangeCategories] = useState<
     FetchCategoriesResponse | undefined
   >(undefined);
   const [isLoading, setLoading] = useState<boolean>(false);
   const renderItem = ({ item }: { item: Category }) => (
     <View style={styles.itemStyle}>
-      <TouchableOpacity onPress={onClick}>
+      <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
         <Image
           source={{ uri: item.strCategoryThumb }}
           style={styles.imageStyle}
@@ -55,7 +57,7 @@ const HomeScreenCategories = () => {
 
   return (
     <View>
-      <Text style={generalStyles.fontStyle}>Categories</Text>
+      <Text style={generalStyles.fontStyle}>{t("categories")}</Text>
       {isLoading ? (
         <View style={generalStyles.loadingStyle}>
           <ActivityIndicator
@@ -69,6 +71,7 @@ const HomeScreenCategories = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
           horizontal={true}
+          contentContainerStyle={styles.contentContainer}
         />
       )}
     </View>
@@ -87,8 +90,10 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 74,
     height: 63,
-    elevation: 1,
     backgroundColor: primary.light_green,
     borderRadius: 5,
+  },
+  contentContainer: {
+    paddingStart: 10,
   },
 });
