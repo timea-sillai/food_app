@@ -1,15 +1,16 @@
 import * as React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { HomeScreenProps } from "../navigation/navigationTypes";
 import SearchBar from "../components/SearchBar";
 import { primary } from "../styles/styleGuide";
 import HomeScreenCategories from "../components/HomeScreenCategories";
 import RandomMealsList from "../components/RandomMeals";
 import { paddings } from "../styles/branding";
+import { generalStyles } from "../styles/generalStyleSheet";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
-    <View style={style.mainViewStyle}>
+    <View style={[style.mainViewStyle, generalStyles.mainViewStyle]}>
       <View style={style.searchViewStyle}>
         <SearchBar></SearchBar>
       </View>
@@ -30,8 +31,6 @@ const style = StyleSheet.create({
     position: "relative",
   },
   mainViewStyle: {
-    marginTop: Platform.OS === "ios" ? 30 : 0,
-    backgroundColor: primary.light_green,
     flex: 1,
   },
   randomMealStyle: {
