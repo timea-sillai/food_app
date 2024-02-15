@@ -16,6 +16,7 @@ import { Meal } from "../types/types";
 import { useDebounce } from "../hooks";
 import { Exit, Search } from "../utils/svg";
 import { useTranslation } from "react-i18next";
+import { generalStyles } from "../styles/generalStyleSheet";
 
 const SearchBar = () => {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ const SearchBar = () => {
           padding: 10,
         }}
       >
-        <Text>{item.strMeal}</Text>
+        <Text style={{ color: primary.black }}>{item.strMeal}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -63,6 +64,7 @@ const SearchBar = () => {
         <TextInput
           style={styles.textInputStyle}
           placeholder={t("searchMeals")}
+          placeholderTextColor={primary.black}
           onChangeText={handleSearch}
           value={textValue}
         />
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1,
     height: 44,
+    color: primary.black,
   },
   mainViewStyle: {
     flexDirection: "row",

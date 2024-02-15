@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { Category, FetchCategoriesResponse } from "../../types/types";
-import businessManagerService from "../../services";
-import { dimensions } from "../../styles/branding";
-import { primary } from "../../styles/styleGuide";
-import { generalStyles } from "../../styles/generalStyleSheet";
+import { Category, FetchCategoriesResponse } from "../types/types";
+import businessManagerService from "../services";
+import { dimensions } from "../styles/branding";
+import { primary } from "../styles/styleGuide";
+import { generalStyles } from "../styles/generalStyleSheet";
 import { useTranslation } from "react-i18next";
-
-const onClick = () => {};
+import { CategoryDetailsNavigationProps } from "../navigation/NavigationTypes";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreenCategories = () => {
   const { t } = useTranslation();
@@ -23,9 +23,20 @@ const HomeScreenCategories = () => {
     FetchCategoriesResponse | undefined
   >(undefined);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const navigation = useNavigation<CategoryDetailsNavigationProps>();
+
+  const onCategorySelected = (category: Category) => {
+    navigation.navigate("CategoryDetails", {
+      categoryName: category.strCategory,
+    });
+  };
+
   const renderItem = ({ item }: { item: Category }) => (
     <View style={styles.itemStyle}>
-      <TouchableOpacity activeOpacity={0.8} onPress={onClick}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => onCategorySelected(item)}
+      >
         <Image
           source={{ uri: item.strCategoryThumb }}
           style={styles.imageStyle}
@@ -71,6 +82,7 @@ const HomeScreenCategories = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
           horizontal={true}
+          contentContainerStyle={styles.contentContainer}
         />
       )}
     </View>
@@ -91,5 +103,8 @@ const styles = StyleSheet.create({
     height: 63,
     backgroundColor: primary.light_green,
     borderRadius: 5,
+  },
+  contentContainer: {
+    paddingStart: 10,
   },
 });

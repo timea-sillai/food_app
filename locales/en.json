@@ -1,4 +1,7 @@
 {
   "searchMeals": "Search meals...",
-  "categories": "Categories"
+  "categories": "Categories",
+  "home": "Home",
+  "recipes": "Recipes",
+  "profile": "Profile"
 }

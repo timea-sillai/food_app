@@ -1,16 +1,64 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { BottomTabParamList } from "./NavigationTypes";
+import { createStackNavigator } from "@react-navigation/stack";
+import { BottomTabParamList, MainParamList } from "./NavigationTypes";
 import HomeScreen from "../pages/HomeScreen";
 import CategoriesScreen from "../pages/CategoriesScreen";
 import UserRecipesScreen from "../pages/UserRecipesScreen";
 import ProfileScreen from "../pages/ProfileScreen";
-import { Image, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { primary } from "../styles/styleGuide";
 import { Bag, Category, Home, Profile } from "../utils/svg";
+import CategoryDetails from "../components/CategoryDetails";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
+const Stack = createStackNavigator<MainParamList>();
+
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: styles.tabBarStyle,
+        tabBarLabelStyle: styles.tabBarLabelStyle,
+        tabBarLabel: ({ focused }) => tabBarLabel(focused, route.name),
+        tabBarHideOnKeyboard: true,
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        options={{
+          tabBarIcon: () => <Home width={25} height={25} />,
+        }}
+        component={HomeScreen}
+      />
+      <Tab.Screen
+        name="Categories"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Category width={20} height={20}></Category>
+          ),
+        }}
+        component={CategoriesScreen}
+      />
+      <Tab.Screen
+        name="Recipes"
+        options={{
+          tabBarIcon: () => <Bag width={25} height={25}></Bag>,
+        }}
+        component={UserRecipesScreen}
+      />
+      <Tab.Screen
+        name="Profile"
+        options={{
+          tabBarIcon: () => <Profile width={20} height={20}></Profile>,
+        }}
+        component={ProfileScreen}
+      />
+    </Tab.Navigator>
+  );
+};
 const tabBarLabel = (focused: boolean, name: string, icon?: string) => {
   return focused ? <Text style={styles.tabLabelStyle}>{name}</Text> : null;
 };
@@ -18,45 +66,20 @@ const tabBarLabel = (focused: boolean, name: string, icon?: string) => {
 export default function RootContainer() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarStyle: styles.tabBarStyle,
-          tabBarLabelStyle: styles.tabBarLabelStyle,
-          tabBarLabel: ({ focused }) => tabBarLabel(focused, route.name),
-        })}
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: primary.light_green, // Change background color here
+          },
+        }}
       >
-        <Tab.Screen
-          name="Home"
-          options={{
-            tabBarIcon: () => <Home width={25} height={25} />,
-          }}
-          component={HomeScreen}
+        <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ headerShown: false }}
         />
-        <Tab.Screen
-          name="Categories"
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Category width={20} height={20}></Category>
-            ),
-          }}
-          component={CategoriesScreen}
-        />
-        <Tab.Screen
-          name="Recipes"
-          options={{
-            tabBarIcon: () => <Bag width={25} height={25}></Bag>,
-          }}
-          component={UserRecipesScreen}
-        />
-        <Tab.Screen
-          name="Profile"
-          options={{
-            tabBarIcon: () => <Profile width={20} height={20}></Profile>,
-          }}
-          component={ProfileScreen}
-        />
-      </Tab.Navigator>
+        <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
