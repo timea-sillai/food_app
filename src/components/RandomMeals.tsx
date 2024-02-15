@@ -8,13 +8,13 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { FetchRandomMealResponse, Meal } from "../../types/types";
-import businessManagerService from "../../services";
-import { dimensions } from "../../styles/branding";
-import { primary } from "../../styles/styleGuide";
+import { FetchRandomMealResponse, Meal } from "../types/types";
+import businessManagerService from "../services";
+import { dimensions } from "../styles/branding";
+import { primary } from "../styles/styleGuide";
 import { useIsFocused } from "@react-navigation/native";
-import Constants from "../../utils/constants";
-import { generalStyles } from "../../styles/generalStyleSheet";
+import Constants from "../utils/constants";
+import { generalStyles } from "../styles/generalStyleSheet";
 
 const RandomMealsList = () => {
   const [ramdomMeals, onChangeRandomMeals] = useState<Set<Meal>>(new Set());

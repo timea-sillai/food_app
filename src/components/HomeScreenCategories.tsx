@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { Category, FetchCategoriesResponse } from "../../types/types";
-import businessManagerService from "../../services";
-import { dimensions } from "../../styles/branding";
-import { primary } from "../../styles/styleGuide";
-import { generalStyles } from "../../styles/generalStyleSheet";
+import { Category, FetchCategoriesResponse } from "../types/types";
+import businessManagerService from "../services";
+import { dimensions } from "../styles/branding";
+import { primary } from "../styles/styleGuide";
+import { generalStyles } from "../styles/generalStyleSheet";
 import { useTranslation } from "react-i18next";
 
 const onClick = () => {};

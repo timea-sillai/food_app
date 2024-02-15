@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { HomeScreenProps } from "../navigation/navigationTypes";
 import SearchBar from "../components/SearchBar";
 import { primary } from "../styles/styleGuide";
-import HomeScreenCategories from "../components/homeScreen/Categories";
-import RandomMealsList from "../components/homeScreen/RandomMeals";
+import HomeScreenCategories from "../components/HomeScreenCategories";
+import RandomMealsList from "../components/RandomMeals";
 import { generalStyles } from "../styles/generalStyleSheet";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
