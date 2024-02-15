@@ -5,4 +5,5 @@ export const primary = {
   grey_light: "#FAFAFA",
   greenDO: "#D0F2D6",
   search_bar_border_color: "#D0F2D6",
+  black: "#000000",
 };
