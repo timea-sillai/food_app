@@ -59,7 +59,7 @@ function* searchMealSaga(action: Action) {
     yield put(setSearchMealResults(undefined, true));
     const response: AxiosResponse<SearchMealResponse> = yield call(
       searchMealApi,
-      action.payload
+      action.payload?.length > 0 ? action.payload : undefined
     );
     const searchResponse = response.data;
     yield put(setSearchMealResults(searchResponse, false));

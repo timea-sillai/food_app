@@ -5,7 +5,7 @@ export type Action = {
 
 // Define the type for the response
 export interface FetchCategoriesResponse {
-  categories: { categories: Category[] };
+  categories: Category[];
 }
 
 export type Category = {
@@ -15,7 +15,7 @@ export type Category = {
 };
 
 export interface FetchRandomMealResponse {
-  randomMeal: { meals: Meal[] };
+  meals: Meal[];
 }
 
 export interface SearchMealResponse {
@@ -23,7 +23,7 @@ export interface SearchMealResponse {
 }
 
 export type Meal = {
-  idMeal: number;
+  idMeal: string;
   strMeal: string;
   strArea: string;
   strCategory: string;
