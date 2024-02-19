@@ -99,9 +99,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  textStyle: {
-    fontSize: 20,
-  },
   textViewStyle: {
     flex: 1,
     justifyContent: "center",

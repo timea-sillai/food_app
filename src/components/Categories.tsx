@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -6,33 +6,32 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator,
+  useWindowDimensions,
 } from "react-native";
 import { Category, FetchCategoriesResponse } from "../types/types";
 import businessManagerService from "../services";
-import { dimensions } from "../styles/branding";
+import { paddings } from "../styles/branding";
 import { primary } from "../styles/styleGuide";
-import { generalStyles } from "../styles/generalStyleSheet";
-import { CategoryBackground } from "../utils/svg";
-import {
-  CategoryDetailsNavigationProps,
-  HomeScreenProps,
-} from "../navigation/NavigationTypes";
+import { CategoryDetailsNavigationProps } from "../navigation/NavigationTypes";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "./Loading";
+import { useTranslation } from "react-i18next";
 
 const HomeScreenCategories = () => {
   const navigation = useNavigation<CategoryDetailsNavigationProps>();
-
-  const [categories, onChangeCategories] = useState<
-    FetchCategoriesResponse | undefined
-  >(undefined);
-
+  const [categories, onChangeCategories] = useState<FetchCategoriesResponse>();
   const [isLoading, setLoading] = useState<boolean>(false);
-  interface FlatListProps {
-    item: Category;
-    index: number;
-  }
+  const { height } = useWindowDimensions();
+  const { t } = useTranslation();
+
+  const customStyle = StyleSheet.create({
+    listHeaderComponent: {
+      height: height * 0.2,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "transparent",
+    },
+  });
 
   const onCategorySelected = (category: Category) => {
     navigation.navigate("CategoryDetails", {
@@ -40,57 +39,116 @@ const HomeScreenCategories = () => {
     });
   };
 
-  const renderItem = ({ item, index }: FlatListProps) => {
+  interface RenderCategoryItem {
+    item: Category;
+    index: number;
+  }
+
+  const renderItem = ({ item, index }: RenderCategoryItem) => {
     const isItemPositionEven = index % 2 === 0;
     return (
       <TouchableOpacity
         activeOpacity={0.8}
+        style={{ marginTop: 0 }}
         onPress={() => {
           onCategorySelected(item);
         }}
-        style={{ marginLeft: 50, marginRight: 50 }}
       >
         <View
           style={[
-            styles.container,
             {
-              flexDirection: isItemPositionEven ? "row" : "row-reverse",
-              elevation: 10,
+              borderWidth: 1,
+              borderColor: "red",
+              flex: 1,
+              alignSelf: "center",
+              alignContent: "center",
+              justifyContent: "center",
+              position: "relative",
+              backgroundColor: "white",
             },
+            isItemPositionEven
+              ? {
+                  paddingRight: 50,
+                }
+              : {
+                  marginLeft: 50,
+                },
+            styles.container,
+            index == 0 ? styles.firstListElementStyle : null,
           ]}
         >
+          <Image
+            source={require("../../assets/images/background_image.png")}
+            style={[
+              {
+                position: "absolute",
+                alignSelf: "center",
+                alignContent: "center",
+                justifyContent: "center",
+                marginTop: 60,
+              },
+              isItemPositionEven
+                ? {
+                    borderTopRightRadius: 50,
+                    borderBottomRightRadius: 50,
+                  }
+                : {
+                    borderTopLeftRadius: 50,
+                    borderBottomLeftRadius: 50,
+                  },
+              styles.categoryBackgroundStyle,
+            ]}
+          />
           <View
             style={[
-              styles.textItemViewStyle,
               {
-                marginLeft: isItemPositionEven ? 50 : 0,
-                marginRight: isItemPositionEven ? 0 : 50,
+                borderWidth: 1,
+                borderColor: "yellow",
               },
+              {
+                flex: 1,
+                alignItems: "center",
+              },
+              isItemPositionEven
+                ? styles.evenListElementStyle
+                : styles.oddListElementStyle,
             ]}
           >
-            <CategoryBackground
-              style={styles.categoryBackgroundStyle}
-              width="100%"
-              height="100%"
-            ></CategoryBackground>
-            <Text
+            <View
               style={[
-                styles.text,
                 {
-                  marginLeft: isItemPositionEven ? 50 : 0,
-                  marginRight: isItemPositionEven ? 0 : 50,
+                  borderWidth: 1,
+                  borderColor: "blue",
                 },
+                styles.textItemViewStyle,
               ]}
             >
-              {item.strCategory}
-            </Text>
-          </View>
-
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: item.strCategoryThumb }}
-              style={styles.image}
-            />
+              {/* <Image
+                source={require("../../assets/images/background_image.png")}
+                style={[
+                  { position: "absolute" },
+                  styles.categoryBackgroundStyle,
+                ]}
+              /> */}
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    borderWidth: 1,
+                    borderColor: "red",
+                    alignSelf: "center",
+                  },
+                ]}
+              >
+                {item.strCategory}
+              </Text>
+            </View>
+            <View style={[{ opacity: 1 }, styles.imageContainer]}>
+              <Image
+                source={{ uri: item.strCategoryThumb }}
+                style={styles.image}
+              />
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -119,20 +177,29 @@ const HomeScreenCategories = () => {
         <Loading />
       ) : (
         <FlatList<Category>
+          ListHeaderComponent={() => {
+            return (
+              <View style={customStyle.listHeaderComponent}>
+                <Text style={[styles.textStyle]}>{t("categories")}</Text>
+              </View>
+            );
+          }}
           data={categories?.categories}
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
-          contentContainerStyle={styles.contentContainer}
-          scrollEnabled={false}
         />
       )}
     </View>
   );
 };
 
-export default HomeScreenCategories;
-
 const styles = StyleSheet.create({
+  firstListElementStyle: {
+    backgroundColor: primary.white,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    paddingTop: paddings.padding_30,
+  },
   itemStyle: {
     flex: 1,
     justifyContent: "center",
@@ -156,18 +223,16 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexDirection: "row-reverse",
     alignItems: "center",
   },
   text: {
     fontSize: 20,
     fontWeight: "bold",
-    flex: 1,
     alignContent: "center",
     justifyContent: "center",
     textAlign: "center",
+    width: "100%",
     color: primary.black,
-    marginTop: 30,
   },
   image: {
     width: "100%",
@@ -185,13 +250,12 @@ const styles = StyleSheet.create({
     borderColor: primary.greenDO,
     borderWidth: 5,
   },
-  contentContainer: {
-    paddingTop: 20,
-  },
   categoryBackgroundStyle: {
-    position: "absolute",
+    // position: "absolute",
     top: 0,
     left: 0,
+    width: "100%",
+    height: 100,
     backgroundColor: primary.light_green,
   },
   textItemViewStyle: {
@@ -200,8 +264,26 @@ const styles = StyleSheet.create({
     zIndex: 0,
     width: "100%",
     height: 100,
-    position: "absolute",
+    // position: "absolute",
     alignContent: "center",
     justifyContent: "center",
   },
+  textStyle: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    alignSelf: "center",
+    fontSize: 26,
+    fontWeight: "bold",
+    marginTop: paddings.padding_30,
+    zIndex: 1,
+    //position: "absolute",
+    color: primary.black,
+  },
+  evenListElementStyle: {
+    flexDirection: "row",
+  },
+  oddListElementStyle: {
+    flexDirection: "row-reverse",
+  },
 });
+export default HomeScreenCategories;

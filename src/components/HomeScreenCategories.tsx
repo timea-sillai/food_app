@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 74,
     height: 63,
-    elevation: 1,
     backgroundColor: primary.light_green,
     borderRadius: 5,
   },

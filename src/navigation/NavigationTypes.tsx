@@ -1,6 +1,9 @@
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabNavigationProp,
+  BottomTabScreenProps,
+} from "@react-navigation/bottom-tabs";
 import { RouteProp } from "@react-navigation/native";
-import { StackScreenProps } from "@react-navigation/stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 export type MainParamList = {
   TabNavigator: {};
@@ -18,11 +21,14 @@ export type BottomTabParamList = {
 };
 
 //TabNavigator
-export type TabNavigatorProps = StackScreenProps<MainParamList, "TabNavigator">;
+export type TabNavigatorProps = StackNavigationProp<
+  MainParamList,
+  "TabNavigator"
+>;
 export type TabNavigatorRouteProps = RouteProp<MainParamList, "TabNavigator">;
 
 //CategoryDetails
-export type CategoryDetailsNavigationProps = StackScreenProps<
+export type CategoryDetailsNavigationProps = StackNavigationProp<
   MainParamList,
   "CategoryDetails"
 >;
@@ -36,7 +42,7 @@ export type CategoryDetailsProps = {
 };
 
 //HomeScreen
-export type HomeScreenNavigationProps = BottomTabScreenProps<
+export type HomeScreenNavigationProps = BottomTabNavigationProp<
   BottomTabParamList,
   "Home"
 >;
@@ -47,14 +53,14 @@ export type HomeScreenProps = {
 };
 
 //ProfileScreen
-export type ProfileScreenProps = BottomTabScreenProps<
+export type ProfileScreenNavigationProps = BottomTabNavigationProp<
   BottomTabParamList,
   "Profile"
 >;
 export type ProfileScreenRouteProps = RouteProp<BottomTabParamList, "Profile">;
 
 //CategoriesScreen
-export type CategoriesScreenProps = BottomTabScreenProps<
+export type CategoriesScreenNavigationProps = BottomTabNavigationProp<
   BottomTabParamList,
   "Categories"
 >;
@@ -64,14 +70,14 @@ export type CategoriesScreenRouteProps = RouteProp<
 >;
 
 //SearchScreen
-export type SearchScreenProps = BottomTabScreenProps<
+export type SearchScreenNavigationProps = BottomTabNavigationProp<
   BottomTabParamList,
   "Search"
 >;
 export type SearchScreenRouteProps = RouteProp<BottomTabParamList, "Search">;
 
 //RecipesScreen
-export type RecipesScreenProps = BottomTabScreenProps<
+export type RecipesNavigationProps = BottomTabNavigationProp<
   BottomTabParamList,
   "Recipes"
 >;

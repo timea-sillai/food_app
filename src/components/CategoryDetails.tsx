@@ -12,11 +12,7 @@ import { FetchRandomMealResponse, Meal } from "../types/types";
 import businessManagerService from "../services";
 import { FlatList } from "react-native-gesture-handler";
 import { primary } from "../styles/styleGuide";
-import { dimensions } from "../styles/branding";
-import { t } from "i18next";
 import { generalStyles } from "../styles/generalStyleSheet";
-import { CategoryBackground } from "../utils/svg";
-import Categories from "./Categories";
 
 const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   route,
@@ -57,11 +53,11 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   return (
     <View style={[generalStyles.mainViewStyle, styles.mainViewStyle]}>
       <ScrollView>
-        <CategoryBackground
+        {/* <CategoryBackground
           style={styles.backgroundStyle}
           width="100%"
           height="200"
-        ></CategoryBackground>
+        ></CategoryBackground> */}
 
         <Text style={[styles.titleStyle]}>{categoryName}</Text>
         <View style={styles.categoriesViewStyle}>
