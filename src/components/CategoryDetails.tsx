@@ -1,18 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { CategoryDetailsProps } from "../navigation/NavigationTypes";
 import { FetchRandomMealResponse, Meal } from "../types/types";
 import businessManagerService from "../services";
 import { FlatList } from "react-native-gesture-handler";
 import { primary } from "../styles/styleGuide";
 import { generalStyles } from "../styles/generalStyleSheet";
+import LinearGradient from "react-native-linear-gradient";
+import Loading from "./Loading";
 
 const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   route,
@@ -52,24 +47,69 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
 
   return (
     <View style={[generalStyles.mainViewStyle, styles.mainViewStyle]}>
-      <ScrollView>
-        {/* <CategoryBackground
-          style={styles.backgroundStyle}
-          width="100%"
-          height="200"
-        ></CategoryBackground> */}
-
-        <Text style={[styles.titleStyle]}>{categoryName}</Text>
-        <View style={styles.categoriesViewStyle}>
+      <View style={styles.categoriesViewStyle}>
+        {isLoading ? (
+          <View
+            style={{
+              backgroundColor: primary.white,
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Loading />
+          </View>
+        ) : (
           <FlatList
+            ListHeaderComponent={() => {
+              return (
+                <LinearGradient
+                  colors={[
+                    "rgba(0,0,0,0)",
+                    "rgba(0,0,0,0)",
+                    "rgba(128,128,128,0.1)",
+                  ]}
+                  style={{ flex: 1, width: "100%", height: 120 }}
+                  start={{ x: 1, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <Text style={styles.titleStyle}>{categoryName}</Text>
+                  <Image
+                    source={require("../../assets/images/background_image.png")}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      position: "absolute",
+                      zIndex: -1,
+                      borderWidth: 1,
+                      backgroundColor: primary.light_green,
+                    }}
+                  />
+
+                  <View
+                    style={{
+                      backgroundColor: primary.white,
+                      width: "100%",
+                      height: 20,
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      borderTopLeftRadius: 50,
+                      borderTopRightRadius: 50,
+                    }}
+                  ></View>
+                </LinearGradient>
+              );
+            }}
             data={categoryDetails?.meals}
             renderItem={renderItem}
             keyExtractor={(item) => item.idMeal}
             numColumns={3}
-            scrollEnabled={false}
           ></FlatList>
-        </View>
-      </ScrollView>
+        )}
+      </View>
     </View>
   );
 };
@@ -82,13 +122,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     borderColor: primary.search_bar_border_color,
-    backgroundColor: primary.grey_light,
+    backgroundColor: primary.white,
     borderWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 10,
     width: "30%",
     height: 180,
   },
+
   imageStyle: {
     width: "100%",
     height: "80%",
@@ -114,18 +155,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 26,
     fontWeight: "bold",
-    marginTop: 30,
     zIndex: 1,
+    marginTop: 30,
     color: primary.black,
   },
   categoriesViewStyle: {
+    flex: 1,
     backgroundColor: primary.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    marginTop: 30,
-    paddingTop: 20,
-    paddingHorizontal: 8,
-    elevation: 3,
   },
 });
 export default CategoryDetails;

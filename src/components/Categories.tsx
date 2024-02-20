@@ -21,8 +21,8 @@ const HomeScreenCategories = () => {
   const navigation = useNavigation<CategoryDetailsNavigationProps>();
   const [categories, onChangeCategories] = useState<FetchCategoriesResponse>();
   const [isLoading, setLoading] = useState<boolean>(false);
-  const { height } = useWindowDimensions();
   const { t } = useTranslation();
+  const { height } = useWindowDimensions();
 
   const customStyle = StyleSheet.create({
     listHeaderComponent: {
@@ -49,7 +49,6 @@ const HomeScreenCategories = () => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        style={{ marginTop: 0 }}
         onPress={() => {
           onCategorySelected(item);
         }}
@@ -57,56 +56,22 @@ const HomeScreenCategories = () => {
         <View
           style={[
             {
-              borderWidth: 1,
-              borderColor: "red",
               flex: 1,
-              alignSelf: "center",
+              width: "100%",
+              height: 200,
               alignContent: "center",
               justifyContent: "center",
-              position: "relative",
               backgroundColor: "white",
             },
-            isItemPositionEven
-              ? {
-                  paddingRight: 50,
-                }
-              : {
-                  marginLeft: 50,
-                },
             styles.container,
             index == 0 ? styles.firstListElementStyle : null,
           ]}
         >
-          <Image
-            source={require("../../assets/images/background_image.png")}
-            style={[
-              {
-                position: "absolute",
-                alignSelf: "center",
-                alignContent: "center",
-                justifyContent: "center",
-                marginTop: 60,
-              },
-              isItemPositionEven
-                ? {
-                    borderTopRightRadius: 50,
-                    borderBottomRightRadius: 50,
-                  }
-                : {
-                    borderTopLeftRadius: 50,
-                    borderBottomLeftRadius: 50,
-                  },
-              styles.categoryBackgroundStyle,
-            ]}
-          />
           <View
             style={[
               {
-                borderWidth: 1,
-                borderColor: "yellow",
-              },
-              {
                 flex: 1,
+                paddingRight: 50,
                 alignItems: "center",
               },
               isItemPositionEven
@@ -115,27 +80,37 @@ const HomeScreenCategories = () => {
             ]}
           >
             <View
-              style={[
-                {
-                  borderWidth: 1,
-                  borderColor: "blue",
-                },
-                styles.textItemViewStyle,
-              ]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                width: "100%",
+                height: 100,
+                position: "absolute",
+              }}
             >
-              {/* <Image
+              <Image
                 source={require("../../assets/images/background_image.png")}
                 style={[
-                  { position: "absolute" },
+                  {},
+                  isItemPositionEven
+                    ? {
+                        borderTopRightRadius: 50,
+                        borderBottomRightRadius: 50,
+                      }
+                    : {
+                        borderTopLeftRadius: 50,
+                        borderBottomLeftRadius: 50,
+                      },
                   styles.categoryBackgroundStyle,
                 ]}
-              /> */}
+              />
+            </View>
+            <View style={[styles.textItemViewStyle]}>
               <Text
                 style={[
                   styles.text,
                   {
-                    borderWidth: 1,
-                    borderColor: "red",
                     alignSelf: "center",
                   },
                 ]}
@@ -172,9 +147,25 @@ const HomeScreenCategories = () => {
   }, []);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {isLoading ? (
-        <Loading />
+        <View
+          style={{
+            backgroundColor: primary.white,
+            width: "100%",
+            height: "80%",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            borderTopRightRadius: 50,
+            borderTopLeftRadius: 50,
+            position: "absolute",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Loading />
+        </View>
       ) : (
         <FlatList<Category>
           ListHeaderComponent={() => {
@@ -187,6 +178,7 @@ const HomeScreenCategories = () => {
           data={categories?.categories}
           renderItem={renderItem}
           keyExtractor={(item) => item.idCategory}
+          style={{ elevation: 10 }}
         />
       )}
     </View>
@@ -198,6 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: primary.white,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
+    elevation: 2,
     paddingTop: paddings.padding_30,
   },
   itemStyle: {
@@ -251,7 +244,6 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   categoryBackgroundStyle: {
-    // position: "absolute",
     top: 0,
     left: 0,
     width: "100%",
@@ -264,7 +256,6 @@ const styles = StyleSheet.create({
     zIndex: 0,
     width: "100%",
     height: 100,
-    // position: "absolute",
     alignContent: "center",
     justifyContent: "center",
   },
@@ -275,8 +266,6 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     marginTop: paddings.padding_30,
-    zIndex: 1,
-    //position: "absolute",
     color: primary.black,
   },
   evenListElementStyle: {

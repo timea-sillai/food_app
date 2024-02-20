@@ -7,20 +7,17 @@ import HomeScreenCategories from "../components/HomeScreenCategories";
 import RandomMealsList from "../components/RandomMeals";
 import { paddings } from "../styles/branding";
 import { generalStyles } from "../styles/generalStyleSheet";
-import { ScrollView } from "react-native-gesture-handler";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <View style={[style.mainViewStyle, generalStyles.mainViewStyle]}>
-      <ScrollView>
-        <View style={style.searchViewStyle}>
-          <SearchBar></SearchBar>
-        </View>
-        <View style={style.backgroundViewStyle}>
-          <HomeScreenCategories />
-          <RandomMealsList />
-        </View>
-      </ScrollView>
+      <View style={style.searchViewStyle}>
+        <SearchBar></SearchBar>
+      </View>
+      <View style={style.backgroundViewStyle}>
+        <HomeScreenCategories />
+        <RandomMealsList />
+      </View>
     </View>
   );
 };
