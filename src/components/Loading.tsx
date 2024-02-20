@@ -1,11 +1,20 @@
-import React from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { paddings } from "../styles/branding";
+import React, { CSSProperties } from "react";
+import {
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { primary } from "../styles/styleGuide";
 
-const Loading = () => {
+interface LoadingInterface {
+  style?: ViewStyle;
+}
+
+const Loading: React.FC<LoadingInterface> = (props) => {
   return (
-    <View style={style.mainViewStyle}>
+    <View style={[style.mainViewStyle, props.style]}>
       <ActivityIndicator
         style={style.indicatorStyle}
         size={30}
