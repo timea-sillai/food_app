@@ -23,7 +23,7 @@ const RandomMealsList = () => {
   const isFocused = useIsFocused();
 
   const renderItem = ({ item }: { item: Meal }) => (
-    <TouchableOpacity>
+    <TouchableOpacity activeOpacity={0.8}>
       <View style={styles.itemStyle}>
         <Image
           source={{ uri: item.strMealThumb }}
@@ -96,6 +96,14 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  textStyle: {
+    fontSize: 20,
+  },
+  textViewStyle: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
