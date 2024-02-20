@@ -15,4 +15,8 @@ export const generalStyles = StyleSheet.create({
     marginTop: Platform.OS === "ios" ? 30 : 0,
     backgroundColor: primary.light_green,
   },
+  backgroundStyle: {
+    position: "absolute",
+    backgroundColor: primary.light_green,
+  },
 });
