@@ -10,20 +10,31 @@ import {
 
 import { paddings } from "../styles/branding";
 import { primary } from "../styles/styleGuide";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Constants from "../utils/constants";
 import { generalStyles } from "../styles/generalStyleSheet";
 import mealService from "../services";
 import Loading from "./Loading";
 import { Meal } from "../types/types";
+import { MealDetailsNavigationProps } from "../navigation/NavigationTypes";
 
 const RandomMealsList = () => {
   const [ramdomMeals, onChangeRandomMeals] = useState<Set<Meal>>(new Set());
   const [isLoading, setLoading] = useState<boolean>(false);
   const isFocused = useIsFocused();
+  const navigation = useNavigation<MealDetailsNavigationProps>();
+
+  const onRandomMealClicked = (id: string) => {
+    navigation.navigate("MealDetails", {
+      mealId: id,
+    });
+  };
 
   const renderItem = ({ item }: { item: Meal }) => (
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => onRandomMealClicked(item.idMeal)}
+    >
       <View style={styles.itemStyle}>
         <Image
           source={{ uri: item.strMealThumb }}

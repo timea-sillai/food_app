@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { CategoryDetailsProps } from "../navigation/NavigationTypes";
-import { FetchRandomMealResponse, Meal } from "../types/types";
+import { FetchMealResponse, Meal } from "../types/types";
 import { FlatList } from "react-native-gesture-handler";
 import { primary } from "../styles/styleGuide";
 import { generalStyles } from "../styles/generalStyleSheet";
@@ -15,10 +15,10 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   navigation,
 }) => {
   const [categoryDetails, onChangeCategoryDetails] =
-    useState<FetchRandomMealResponse>();
+    useState<FetchMealResponse>();
   const [isLoading, setLoading] = useState<boolean>(false);
   const categoryName = route.params?.categoryName;
-  const gradientColors = ["transparent", primary.shadowColor];
+
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
     const getCategoryDetails = async () => {
@@ -37,8 +37,17 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
     getCategoryDetails();
   }, []);
 
+  const onMealClicked = (id: string) => {
+    navigation.navigate("MealDetails", {
+      mealId: id,
+    });
+  };
+
   const renderItem = ({ item }: { item: Meal }) => (
-    <TouchableOpacity style={styles.renderItemStyle}>
+    <TouchableOpacity
+      style={styles.renderItemStyle}
+      onPress={() => onMealClicked(item.idMeal)}
+    >
       <Image style={styles.imageStyle} source={{ uri: item.strMealThumb }} />
       <Text numberOfLines={2} style={styles.textStyle}>
         {item.strMeal}
@@ -56,22 +65,7 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
         ) : (
           <FlatList
             ListHeaderComponent={() => {
-              return (
-                <LinearGradient
-                  colors={gradientColors}
-                  style={styles.gradientStyle}
-                  start={{ x: 1, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                >
-                  <Text style={styles.titleStyle}>{categoryName}</Text>
-                  <Image
-                    source={require("../../assets/images/background_image.png")}
-                    style={styles.backgroundImageStyle}
-                  />
-
-                  <View style={styles.topViewStyle}></View>
-                </LinearGradient>
-              );
+              return <ListHeader categoryName={categoryName} />;
             }}
             data={categoryDetails?.meals}
             renderItem={renderItem}
@@ -81,6 +75,37 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
         )}
       </View>
     </View>
+  );
+};
+interface ListHeaderProps {
+  categoryName: string;
+}
+const ListHeader: React.FC<ListHeaderProps> = (props) => {
+  const gradientColors = ["transparent", primary.shadowColor];
+  return (
+    <LinearGradient
+      colors={gradientColors}
+      style={styles.gradientStyle}
+      start={{ x: 1, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
+      <Text
+        style={[
+          generalStyles.titleStyle,
+          {
+            marginTop: paddings.padding_30,
+          },
+        ]}
+      >
+        {props.categoryName}
+      </Text>
+      <Image
+        source={require("../../assets/images/background_image.png")}
+        style={styles.backgroundImageStyle}
+      />
+
+      <View style={styles.topViewStyle}></View>
+    </LinearGradient>
   );
 };
 
@@ -115,7 +140,6 @@ const styles = StyleSheet.create({
     height: "100%",
     position: "absolute",
     zIndex: -1,
-    borderWidth: 1,
     backgroundColor: primary.light_green,
   },
   imageStyle: {
@@ -139,14 +163,6 @@ const styles = StyleSheet.create({
     backgroundColor: primary.light_green,
     zIndex: 0,
   },
-  titleStyle: {
-    textAlign: "center",
-    fontSize: 26,
-    fontWeight: "bold",
-    zIndex: 1,
-    marginTop: paddings.padding_30,
-    color: primary.black,
-  },
   categoriesViewStyle: {
     flex: 1,
     backgroundColor: primary.white,
@@ -164,4 +180,5 @@ const styles = StyleSheet.create({
     height: 120,
   },
 });
+
 export default CategoryDetails;

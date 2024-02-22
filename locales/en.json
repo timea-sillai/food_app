@@ -1,4 +1,11 @@
 {
   "searchMeals": "Search meals...",
-  "categories": "Categories"
+  "categories": "Categories",
+  "mealDetails": "Meal Details",
+  "similarMeals": "Similar meals",
+  "originalCountry": "Original country",
+  "category": "Category",
+  "instructions": "Instructions",
+  "keyWords": "Key words",
+  "video": "Video"
 }

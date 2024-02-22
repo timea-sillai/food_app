@@ -12,11 +12,18 @@ export const generalStyles = StyleSheet.create({
     fontFamily: "Lato, sans-serif",
   },
   mainViewStyle: {
+    flex: 1,
     marginTop: Platform.OS === "ios" ? 30 : 0,
     backgroundColor: primary.light_green,
   },
   backgroundStyle: {
     position: "absolute",
     backgroundColor: primary.light_green,
+  },
+  titleStyle: {
+    textAlign: "center",
+    fontSize: 26,
+    fontWeight: "bold",
+    color: primary.black,
   },
 });
