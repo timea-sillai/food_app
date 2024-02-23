@@ -5,6 +5,7 @@ import AddToFavourites from "./AddToFavourites";
 import { paddings } from "../../styles/branding";
 import { generalStyles } from "../../styles/generalStyleSheet";
 import { primary } from "../../styles/styleGuide";
+import Loading from "../Loading";
 
 interface MealDetailsViewProps {
   mealDetails: Meal | undefined;
@@ -23,6 +24,7 @@ interface VideoDetailsProps {
 
 const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
   const mealDetails = props.mealDetails;
+
   const Details: React.FC<DetailsProps> = (props) => {
     const mealDetails = props.mealDetails;
     const { t } = useTranslation();
@@ -80,11 +82,19 @@ const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
 
   return (
     <View style={styles.mainView}>
-      <View style={styles.favouritesStyle}>
-        <AddToFavourites />
-      </View>
-      <Details mealDetails={mealDetails} />
-      <VideoDetails videoUrl={mealDetails?.strYoutube} />
+      {props.isLoading ? (
+        <View style={styles.loading}>
+          <Loading />
+        </View>
+      ) : (
+        <>
+          <View style={styles.favouritesStyle}>
+            <AddToFavourites />
+          </View>
+          <Details mealDetails={mealDetails} />
+          <VideoDetails videoUrl={mealDetails?.strYoutube} />
+        </>
+      )}
     </View>
   );
 };
@@ -92,6 +102,12 @@ const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
 export default MealDetailsView;
 
 const styles = StyleSheet.create({
+  loading: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    flex: 1,
+  },
   subtitle: {
     ...generalStyles.fontStyle,
     marginVertical: 0,

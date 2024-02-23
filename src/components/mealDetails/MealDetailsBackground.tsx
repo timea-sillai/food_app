@@ -1,36 +1,30 @@
 import { useTranslation } from "react-i18next";
-import {
-  useWindowDimensions,
-  View,
-  Image,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { useWindowDimensions, View, Image, StyleSheet } from "react-native";
 import { paddings } from "../../styles/branding";
-import { generalStyles } from "../../styles/generalStyleSheet";
 import { primary } from "../../styles/styleGuide";
+import TransparentToolbar from "../TransparentToolbar";
 
 const MealDetailsBackground = () => {
   const { t } = useTranslation();
   const { height } = useWindowDimensions();
-
+  const title = t("mealDetails");
   return (
     <View>
       <Image
         source={require("../../../assets/images/background_image.png")}
         style={styles.backgroundImageStyle}
       />
-      <Text
-        style={[
-          generalStyles.titleStyle,
-          {
-            marginTop: paddings.padding_30,
-            marginBottom: height * 0.2,
-          },
-        ]}
+      <View
+        style={{
+          marginTop: paddings.padding_30,
+          marginBottom: height * 0.2,
+        }}
       >
-        {t("mealDetails")}
-      </Text>
+        <TransparentToolbar
+          showBackButton={true}
+          title={title}
+        ></TransparentToolbar>
+      </View>
     </View>
   );
 };
