@@ -9,6 +9,7 @@ import LinearGradient from "react-native-linear-gradient";
 import Loading from "./Loading";
 import mealService from "../services";
 import { paddings } from "../styles/branding";
+import TransparentToolbar from "./TransparentToolbar";
 
 const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   route,
@@ -87,16 +88,11 @@ const ListHeader: React.FC<ListHeaderProps> = (props) => {
       start={{ x: 1, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <Text
-        style={[
-          generalStyles.titleStyle,
-          {
-            marginTop: paddings.padding_30,
-          },
-        ]}
-      >
-        {props.categoryName}
-      </Text>
+      <TransparentToolbar
+        showBackButton={true}
+        title={props.categoryName}
+      ></TransparentToolbar>
+
       <Image
         source={require("../../assets/images/background_image.png")}
         style={styles.backgroundImageStyle}
