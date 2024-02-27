@@ -11,7 +11,7 @@ class MealService {
     endpoint: string,
     param?: string
   ): Promise<{ url: string; requestOptions: { method: string } }> {
-    const url = `${Constants.BASE_URL}${endpoint}/${param ?? ""}`;
+    const url = `${Constants.BASE_URL}${endpoint}${param ?? ""}`;
     const requestOptions = {
       method: Constants.GET_METHOD_TYPE,
     };
@@ -21,6 +21,18 @@ class MealService {
   async fetchCategoriesApi(): Promise<FetchCategoriesResponse | undefined> {
     const { url, requestOptions } = await this.getRequestData(
       Constants.CATEGORIES_ENDPOINT
+    );
+    const response = await fetch(url, requestOptions);
+    const json = await response.json();
+    return json;
+  }
+
+  async fetchCategoriesDetailsApi(
+    categoryName: string
+  ): Promise<FetchRandomMealResponse> {
+    const { url, requestOptions } = await this.getRequestData(
+      Constants.CATEGORIES_DETAILS_ENDPOINT,
+      categoryName
     );
     const response = await fetch(url, requestOptions);
     const json = await response.json();
