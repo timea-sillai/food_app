@@ -1,7 +1,4 @@
-import {
-  BottomTabNavigationProp,
-  BottomTabScreenProps,
-} from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
@@ -9,6 +6,9 @@ export type MainParamList = {
   TabNavigator: {};
   CategoryDetails: {
     categoryName: string;
+  };
+  MealDetails: {
+    mealId: string;
   };
 };
 
@@ -26,6 +26,17 @@ export type TabNavigatorProps = StackNavigationProp<
   "TabNavigator"
 >;
 export type TabNavigatorRouteProps = RouteProp<MainParamList, "TabNavigator">;
+
+//MealDetails
+export type MealDetailsNavigationProps = StackNavigationProp<
+  MainParamList,
+  "MealDetails"
+>;
+export type MealDetailsRouteProps = RouteProp<MainParamList, "MealDetails">;
+export type MealDetailsProps = {
+  route: MealDetailsRouteProps;
+  navigation: MealDetailsNavigationProps;
+};
 
 //CategoryDetails
 export type CategoryDetailsNavigationProps = StackNavigationProp<

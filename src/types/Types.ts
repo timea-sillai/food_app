@@ -14,7 +14,7 @@ export type Category = {
   strCategoryThumb: string;
 };
 
-export interface FetchRandomMealResponse {
+export interface FetchMealResponse {
   meals: Meal[];
 }
 
@@ -28,4 +28,7 @@ export type Meal = {
   strArea: string;
   strCategory: string;
   strMealThumb: string;
+  strInstructions: string;
+  strTags: string;
+  strYoutube: string;
 };

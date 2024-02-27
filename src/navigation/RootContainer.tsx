@@ -15,6 +15,7 @@ import { primary } from "../styles/styleGuide";
 import { Bag, Category, Home, Profile } from "../utils/svg";
 import { useState } from "react";
 import CategoryDetails from "../components/CategoryDetails";
+import MealDetails from "../components/mealDetails";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const Stack = createStackNavigator<MainParamList>();
@@ -83,6 +84,7 @@ export default function RootContainer() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
+        <Stack.Screen name="MealDetails" component={MealDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

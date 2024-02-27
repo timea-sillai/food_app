@@ -4,5 +4,7 @@ import Profile from "../../assets/svg/profile.svg";
 import Home from "../../assets/svg/home.svg";
 import Category from "../../assets/svg/category.svg";
 import Exit from "../../assets/svg/exit.svg";
+import Heart from "../../assets/svg/heart.svg";
+import EmptyHeart from "../../assets/svg/heart_empty.svg";
 
-export { Search, Bag, Profile, Home, Category, Exit };
+export { Search, Bag, Profile, Home, Category, Exit, Heart, EmptyHeart };
