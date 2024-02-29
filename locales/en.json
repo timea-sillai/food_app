@@ -7,5 +7,10 @@
   "category": "Category",
   "instructions": "Instructions",
   "keyWords": "Key words",
-  "video": "Video"
+  "video": "Video",
+  "favourites": "Favourites",
+  "warning": "Warning",
+  "removeFavouriteMessage": "Are you sure you want to remove this item from favourites?",
+  "yes": "yes",
+  "noFavouritesMessage": "There are no favourites yet"
 }

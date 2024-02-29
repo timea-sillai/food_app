@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Text, View, Linking, StyleSheet } from "react-native";
 import { Meal } from "../../types/types";
-import AddToFavourites from "./AddToFavourites";
+import AddToFavourites, { FavouritesDetails } from "./AddToFavourites";
 import { paddings } from "../../styles/branding";
 import { generalStyles } from "../../styles/generalStyleSheet";
 import { primary } from "../../styles/styleGuide";
@@ -24,6 +24,11 @@ interface VideoDetailsProps {
 
 const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
   const mealDetails = props.mealDetails;
+  const favouritesDetails: FavouritesDetails = {
+    strMealThumb: mealDetails?.strMealThumb ?? "",
+    strMeal: mealDetails?.strMeal ?? "",
+    idMeal: mealDetails?.idMeal ?? "",
+  };
 
   const Details: React.FC<DetailsProps> = (props) => {
     const mealDetails = props.mealDetails;
@@ -83,14 +88,13 @@ const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
   return (
     <View style={styles.mainView}>
       {props.isLoading ? (
-        <View style={styles.loading}>
-          <Loading />
-        </View>
+        <Loading style={styles.loading} />
       ) : (
         <>
-          <View style={styles.favouritesStyle}>
-            <AddToFavourites />
-          </View>
+          <AddToFavourites
+            meal={favouritesDetails}
+            style={styles.favouritesStyle}
+          />
           <Details mealDetails={mealDetails} />
           <VideoDetails videoUrl={mealDetails?.strYoutube} />
         </>

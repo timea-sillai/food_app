@@ -1,28 +1,27 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
-  View,
   FlatList,
-  Text,
   Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
-  useWindowDimensions,
+  View,
 } from "react-native";
-import { Category, FetchCategoriesResponse } from "../types/types";
+import { CategoryDetailsNavigationProps } from "../navigation/NavigationTypes";
+import mealService from "../services";
 import { paddings } from "../styles/branding";
 import { primary } from "../styles/styleGuide";
-import { CategoryDetailsNavigationProps } from "../navigation/NavigationTypes";
-import { useNavigation } from "@react-navigation/native";
+import { Category, FetchCategoriesResponse } from "../types/types";
 import Loading from "./Loading";
-import { useTranslation } from "react-i18next";
-import mealService from "../services";
+import ListHeader from "./ListHeader";
 
 const HomeScreenCategories = () => {
   const navigation = useNavigation<CategoryDetailsNavigationProps>();
   const [categories, onChangeCategories] = useState<FetchCategoriesResponse>();
   const [isLoading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
-  const { height } = useWindowDimensions();
 
   const onCategorySelected = (category: Category) => {
     navigation.navigate("CategoryDetails", {
@@ -41,10 +40,7 @@ const HomeScreenCategories = () => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => onCategorySelected(item)}
-        style={[
-          styles.container,
-          index == 0 ? styles.firstListElementStyle : null,
-        ]}
+        style={styles.container}
       >
         <View
           style={[
@@ -103,16 +99,10 @@ const HomeScreenCategories = () => {
         <FlatList<Category>
           ListHeaderComponent={() => {
             return (
-              <View
-                style={[
-                  {
-                    height: height * 0.2,
-                  },
-                  styles.listHeaderComponent,
-                ]}
-              >
-                <Text style={styles.textStyle}>{t("categories")}</Text>
-              </View>
+              <ListHeader
+                categoryName={t("categories")}
+                showBackButton={false}
+              />
             );
           }}
           data={categories?.categories}
@@ -125,13 +115,6 @@ const HomeScreenCategories = () => {
 };
 
 const styles = StyleSheet.create({
-  firstListElementStyle: {
-    backgroundColor: primary.white,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-    elevation: 2,
-    paddingTop: paddings.padding_30,
-  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -182,15 +165,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
   },
-  textStyle: {
-    textAlign: "center",
-    textAlignVertical: "center",
-    alignSelf: "center",
-    fontSize: 26,
-    fontWeight: "bold",
-    marginTop: paddings.padding_30,
-    color: primary.black,
-  },
   evenListElementStyle: {
     flexDirection: "row",
   },
@@ -204,11 +178,6 @@ const styles = StyleSheet.create({
   oddPositionListElementStyle: {
     borderTopLeftRadius: 50,
     borderBottomLeftRadius: 50,
-  },
-  listHeaderComponent: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
   },
   innerViewStyle: {
     flex: 1,

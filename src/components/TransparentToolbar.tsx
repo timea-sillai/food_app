@@ -10,6 +10,7 @@ import { generalStyles } from "../styles/generalStyleSheet";
 import { Back } from "../utils/svg";
 import { useNavigation } from "@react-navigation/native";
 import { paddings } from "../styles/branding";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface TransparentToolbarProps {
   showBackButton: boolean;
@@ -25,18 +26,15 @@ const TransparentToolbar: React.FC<TransparentToolbarProps> = (props) => {
   return (
     <View style={style.mainView}>
       {props.showBackButton && (
-        <Back
-          style={style.buttonStyle}
-          width={30}
-          height={30}
-          onPress={onBackPressed}
-        />
+        <TouchableOpacity onPress={onBackPressed}>
+          <Back style={style.buttonStyle} width={30} height={30} />
+        </TouchableOpacity>
       )}
       <Text
         style={[
           style.title,
           {
-            paddingEnd: width * 0.2,
+            paddingEnd: props.showBackButton ? width * 0.2 : 0,
           },
         ]}
       >
@@ -52,7 +50,6 @@ const style = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
   },

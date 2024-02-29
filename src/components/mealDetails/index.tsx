@@ -35,7 +35,7 @@ const MealDetails: FunctionComponent<MealDetailsProps> = ({
   }, []);
 
   return (
-    <View style={[generalStyles.mainViewStyle]}>
+    <View style={generalStyles.mainViewStyle}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <MealDetailsBackground />
         <MealDetailsView mealDetails={mealDetails} isLoading={isLoading} />

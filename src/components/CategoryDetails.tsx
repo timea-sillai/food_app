@@ -1,15 +1,14 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { CategoryDetailsProps } from "../navigation/NavigationTypes";
-import { FetchMealResponse, Meal } from "../types/types";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { primary } from "../styles/styleGuide";
-import { generalStyles } from "../styles/generalStyleSheet";
-import LinearGradient from "react-native-linear-gradient";
-import Loading from "./Loading";
+import { CategoryDetailsProps } from "../navigation/NavigationTypes";
 import mealService from "../services";
 import { paddings } from "../styles/branding";
-import TransparentToolbar from "./TransparentToolbar";
+import { generalStyles } from "../styles/generalStyleSheet";
+import { primary } from "../styles/styleGuide";
+import { FetchMealResponse, Meal } from "../types/types";
+import Loading from "./Loading";
+import ListHeader from "./ListHeader";
 
 const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   route,
@@ -57,14 +56,16 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
   );
 
   return (
-    <View style={[generalStyles.mainViewStyle, styles.mainViewStyle]}>
+    <View style={generalStyles.mainViewStyle}>
       <View style={styles.categoriesViewStyle}>
         {isLoading ? (
           <Loading style={styles.loadingStyle} />
         ) : (
           <FlatList
             ListHeaderComponent={() => {
-              return <ListHeader categoryName={categoryName} />;
+              return (
+                <ListHeader categoryName={categoryName} showBackButton={true} />
+              );
             }}
             data={categoryDetails?.meals}
             renderItem={renderItem}
@@ -76,45 +77,8 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
     </View>
   );
 };
-interface ListHeaderProps {
-  categoryName: string;
-}
-const ListHeader: React.FC<ListHeaderProps> = (props) => {
-  const gradientColors = ["transparent", primary.shadowColor];
-  return (
-    <LinearGradient
-      colors={gradientColors}
-      style={styles.gradientStyle}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
-      <TransparentToolbar
-        showBackButton={true}
-        title={props.categoryName}
-      ></TransparentToolbar>
-
-      <Image
-        source={require("../../assets/images/background_image.png")}
-        style={styles.backgroundImageStyle}
-      />
-
-      <View style={styles.topViewStyle}></View>
-    </LinearGradient>
-  );
-};
 
 const styles = StyleSheet.create({
-  topViewStyle: {
-    backgroundColor: primary.white,
-    width: "100%",
-    height: paddings.padding_20,
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-  },
   renderItemStyle: {
     flexDirection: "column",
     margin: paddings.padding_8,
@@ -129,13 +93,6 @@ const styles = StyleSheet.create({
     width: "30%",
     height: 180,
   },
-  backgroundImageStyle: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    zIndex: -1,
-    backgroundColor: primary.light_green,
-  },
   imageStyle: {
     width: "100%",
     height: "80%",
@@ -145,12 +102,6 @@ const styles = StyleSheet.create({
     height: "100%",
     fontWeight: "bold",
     color: primary.black,
-  },
-  mainViewStyle: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    position: "absolute",
   },
   backgroundStyle: {
     position: "absolute",
@@ -167,11 +118,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-  },
-  gradientStyle: {
-    flex: 1,
-    width: "100%",
-    height: 120,
   },
 });
 
