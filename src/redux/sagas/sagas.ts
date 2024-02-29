@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from "axios";
 import {
   Action,
   FetchCategoriesResponse,
-  FetchRandomMealResponse,
+  FetchMealResponse,
   SearchMealResponse,
 } from "../../types/types";
 import { setCategories, FETCH_CATEGORIES } from "../actions/categoriesActions";
@@ -43,7 +43,7 @@ function* fetchCategoriesSaga() {
 function* fetchRandomMealSaga() {
   try {
     yield put(setRandomMeal(undefined, true));
-    const response: AxiosResponse<FetchRandomMealResponse> = yield call(
+    const response: AxiosResponse<FetchMealResponse> = yield call(
       fetchRandomMealApi
     );
     const randomMeal = response.data;

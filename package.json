@@ -41,6 +41,7 @@
     "@react-native/metro-config": "^0.73.2",
     "@react-native/typescript-config": "^0.73.1",
     "@types/react": "^18.2.6",
+    "@types/react-native-video": "^5.0.19",
     "@types/react-test-renderer": "^18.0.0",
     "@types/redux-logger": "^3.0.12",
     "babel-jest": "^29.6.3",

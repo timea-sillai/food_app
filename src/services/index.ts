@@ -1,6 +1,6 @@
 import {
   FetchCategoriesResponse,
-  FetchRandomMealResponse,
+  FetchMealResponse,
   Meal,
   SearchMealResponse,
 } from "../types/types";
@@ -29,7 +29,7 @@ class MealService {
 
   async fetchCategoriesDetailsApi(
     categoryName: string
-  ): Promise<FetchRandomMealResponse> {
+  ): Promise<FetchMealResponse> {
     const { url, requestOptions } = await this.getRequestData(
       Constants.CATEGORIES_DETAILS_ENDPOINT,
       categoryName
@@ -39,7 +39,16 @@ class MealService {
     return json;
   }
 
-  async fetchRandomMealApi(): Promise<FetchRandomMealResponse> {
+  async fetchMealDetailsApi(mealId: string): Promise<FetchMealResponse> {
+    const { url, requestOptions } = await this.getRequestData(
+      Constants.MEAL_DETAILS_ENDPOINT,
+      mealId
+    );
+    const response = await fetch(url, requestOptions);
+    return await response.json();
+  }
+
+  async fetchRandomMealApi(): Promise<FetchMealResponse> {
     const { url, requestOptions } = await this.getRequestData(
       Constants.RANDOM_MEAL_ENDPOINT
     );
@@ -51,7 +60,7 @@ class MealService {
   async fetchRandomMeals(counter: number): Promise<Set<Meal>> {
     const newSet: Set<Meal> = new Set();
     for (let i = 1; i <= counter; i++) {
-      const response: FetchRandomMealResponse =
+      const response: FetchMealResponse =
         await mealService.fetchRandomMealApi();
       response?.meals.map((meal) => {
         newSet.add(meal);

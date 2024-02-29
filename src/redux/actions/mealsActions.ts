@@ -1,4 +1,4 @@
-import { FetchRandomMealResponse } from "../../types/types";
+import { FetchMealResponse } from "../../types/types";
 
 export const FETCH_RANDOM_MEAL = "FETCH_RANDOM_MEAL";
 export const SET_RANDOM_MEAL = "SET_RANDOM_MEAL";
@@ -8,7 +8,7 @@ export const fetchRandomMeal = () => ({
 });
 
 export const setRandomMeal = (
-  randomMeal: FetchRandomMealResponse | undefined,
+  randomMeal: FetchMealResponse | undefined,
   loading: boolean,
   error?: string
 ) => ({
