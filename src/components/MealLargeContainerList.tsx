@@ -8,14 +8,15 @@ import { Meal } from "../types/types";
 import ListHeader from "./ListHeader";
 import Loading from "./Loading";
 import MealLargeContainer from "./MealLargeContainter";
+import { FavouritesDetails } from "./AddToFavourites";
 
 interface MealLargeContainerListProps {
   isLoading: boolean;
-  meals: Meal[];
+  meals: Meal[] | FavouritesDetails[];
   headerTitle?: string;
   useHeader: boolean;
   showFavourites?: boolean;
-  refreshList: () => void;
+  refreshList?: () => void;
 }
 
 const MealLargeContainerList: React.FC<MealLargeContainerListProps> = (

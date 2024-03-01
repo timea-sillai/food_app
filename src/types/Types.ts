@@ -32,3 +32,12 @@ export type Meal = {
   strTags: string;
   strYoutube: string;
 };
+
+type User = {
+  uid: string;
+  email: string;
+};
+
+export type FirebaseUser = {
+  user: User;
+};

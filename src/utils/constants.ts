@@ -8,4 +8,5 @@ export default class Constants {
   static SEARCH_MEAL_ENDPOINT = "/search.php?s=";
   static GET_METHOD_TYPE = "GET";
   static RANDOM_MEALS_SIZE = 3;
+  static LOGIN_ERROR = "auth/invalid-email";
 }

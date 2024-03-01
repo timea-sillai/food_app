@@ -12,6 +12,7 @@ import UserRecipesScreen from "../pages/UserRecipesScreen";
 import { primary } from "../styles/styleGuide";
 import { Bag, Category, Home, Profile } from "../utils/svg";
 import { BottomTabParamList, MainParamList } from "./NavigationTypes";
+import LoginScreen from "../pages/LoginScreen";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const Stack = createStackNavigator<MainParamList>();
@@ -70,10 +71,15 @@ export default function RootContainer() {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: primary.light_green, // Change background color here
+            backgroundColor: primary.light_green,
           },
         }}
       >
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="TabNavigator"
           component={TabNavigator}

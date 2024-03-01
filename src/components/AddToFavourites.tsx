@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Alert, TouchableOpacity, ViewStyle } from "react-native";
-import { Heart, EmptyHeart } from "../../utils/svg";
-import asyncStorage from "../../storage";
-import alertDialog, { AlertDialogObject } from "../AlertDialog";
+import { Heart, EmptyHeart } from "../utils/svg";
+import asyncStorage from "../storage";
+import alertDialog, { AlertDialogObject } from "./AlertDialog";
 import { useTranslation } from "react-i18next";
 
 export interface FavouritesDetails {
   idMeal: string;
   strMeal: string;
   strMealThumb: string;
+  userId?: string | null;
 }
 
 interface AddToFavouritesProps {

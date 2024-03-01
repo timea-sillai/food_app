@@ -10,6 +10,7 @@ export type MainParamList = {
   MealDetails: {
     mealId: string;
   };
+  Login: {};
 };
 
 export type BottomTabParamList = {
@@ -26,6 +27,13 @@ export type TabNavigatorProps = StackNavigationProp<
   "TabNavigator"
 >;
 export type TabNavigatorRouteProps = RouteProp<MainParamList, "TabNavigator">;
+
+//LoginScreen
+export type LoginScreenNavigationProps = StackNavigationProp<
+  MainParamList,
+  "Login"
+>;
+export type LoginScreenRouteProps = RouteProp<MainParamList, "Login">;
 
 //MealDetails
 export type MealDetailsNavigationProps = StackNavigationProp<

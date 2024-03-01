@@ -1,4 +1,5 @@
 export const paddings = {
+  padding_4: 4,
   padding_8: 8,
   padding_16: 16,
   padding_20: 20,

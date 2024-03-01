@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Text, View, Linking, StyleSheet } from "react-native";
 import { Meal } from "../../types/types";
-import AddToFavourites, { FavouritesDetails } from "./AddToFavourites";
+import AddToFavourites, { FavouritesDetails } from "../AddToFavourites";
 import { paddings } from "../../styles/branding";
 import { generalStyles } from "../../styles/generalStyleSheet";
 import { primary } from "../../styles/styleGuide";

@@ -12,5 +12,14 @@
   "warning": "Warning",
   "removeFavouriteMessage": "Are you sure you want to remove this item from favourites?",
   "yes": "yes",
-  "noFavouritesMessage": "There are no favourites yet"
+  "noFavouritesMessage": "There are no favourites yet",
+  "signIn": "Sign In",
+  "email": "Email",
+  "password": "Password",
+  "signUp": "Sign up",
+  "accountQuestion": "Don't have an Account?",
+  "skipLogin": "Skip login",
+  "logOut": "Log out",
+  "loginError": "Invalid email or password",
+  "error": "error"
 }

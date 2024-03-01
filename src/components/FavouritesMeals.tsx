@@ -7,6 +7,7 @@ import { generalStyles } from "../styles/generalStyleSheet";
 import { primary } from "../styles/styleGuide";
 import { Meal } from "../types/types";
 import MealLargeContainerList from "./MealLargeContainerList";
+import { FavouritesDetails } from "./AddToFavourites";
 
 interface FavouritesMealsProps {
   style?: ViewStyle;
@@ -15,13 +16,13 @@ interface FavouritesMealsProps {
 const FavouritesMeals: React.FC<FavouritesMealsProps> = (props) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
-  const [favouritesMeals, onChangeMeals] = useState<Meal[]>([]);
+  const [favouritesMeals, onChangeMeals] = useState<FavouritesDetails[]>([]);
   const isFocused = useIsFocused();
 
   const getFavourites = async () => {
     try {
       setLoading(true);
-      const meals: Meal[] = await asyncStorage.getFavourites();
+      const meals: FavouritesDetails[] = await asyncStorage.getFavourites();
       onChangeMeals(meals);
     } catch (e) {
       console.error("[ Favourites Meals ]", e);

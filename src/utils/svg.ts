@@ -7,5 +7,17 @@ import Exit from "../../assets/svg/exit.svg";
 import Heart from "../../assets/svg/heart.svg";
 import EmptyHeart from "../../assets/svg/heart_empty.svg";
 import Back from "../../assets/svg/back.svg";
+import SeePassword from "../../assets/svg/see_password.svg";
 
-export { Search, Bag, Profile, Home, Category, Exit, Heart, EmptyHeart, Back };
+export {
+  Search,
+  Bag,
+  Profile,
+  Home,
+  Category,
+  Exit,
+  Heart,
+  EmptyHeart,
+  Back,
+  SeePassword,
+};

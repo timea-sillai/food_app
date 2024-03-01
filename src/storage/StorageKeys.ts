@@ -1,3 +1,4 @@
 export default class StorageKeys {
-  static FAVOURITES_KEY = "Favourites.Key";
+  static UNLOGGED_USERS_FAVOURITES_KEY = "Favourites.Key";
+  static USER_ID = "UserId.Key";
 }

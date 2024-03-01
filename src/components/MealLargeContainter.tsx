@@ -10,9 +10,7 @@ import {
 import { paddings } from "../styles/branding";
 import { primary } from "../styles/styleGuide";
 import { generalStyles } from "../styles/generalStyleSheet";
-import AddToFavourites, {
-  FavouritesDetails,
-} from "./mealDetails/AddToFavourites";
+import AddToFavourites, { FavouritesDetails } from "./AddToFavourites";
 
 interface MealLargeContainerProps {
   onContainerClicked: (event: GestureResponderEvent) => void;
