@@ -1,10 +1,7 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
+import * as React from "react";
+import FavouritesMeals from "../components/FavouritesMeals";
+import { generalStyles } from "../styles/generalStyleSheet";
 
 export default function UserRecipesScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>User recipes</Text>
-      </View>
-    );
+  return <FavouritesMeals style={generalStyles.mainViewStyle} />;
 }

@@ -1,21 +1,17 @@
-import * as React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  createBottomTabNavigator,
-  useBottomTabBarHeight,
-} from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { BottomTabParamList, MainParamList } from "./NavigationTypes";
-import HomeScreen from "../pages/HomeScreen";
-import CategoriesScreen from "../pages/CategoriesScreen";
-import UserRecipesScreen from "../pages/UserRecipesScreen";
-import ProfileScreen from "../pages/ProfileScreen";
+import * as React from "react";
 import { StyleSheet, Text } from "react-native";
-import { primary } from "../styles/styleGuide";
-import { Bag, Category, Home, Profile } from "../utils/svg";
-import { useState } from "react";
 import CategoryDetails from "../components/CategoryDetails";
 import MealDetails from "../components/mealDetails";
+import CategoriesScreen from "../pages/CategoriesScreen";
+import HomeScreen from "../pages/HomeScreen";
+import ProfileScreen from "../pages/ProfileScreen";
+import UserRecipesScreen from "../pages/UserRecipesScreen";
+import { primary } from "../styles/styleGuide";
+import { Bag, Category, Home, Profile } from "../utils/svg";
+import { BottomTabParamList, MainParamList } from "./NavigationTypes";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const Stack = createStackNavigator<MainParamList>();
