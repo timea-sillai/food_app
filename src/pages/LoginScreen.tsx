@@ -8,22 +8,30 @@ import { primary } from "../styles/styleGuide";
 import { paddings } from "../styles/branding";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { TabNavigatorProps } from "../navigation/NavigationTypes";
+import {
+  RegistrationNavigationProps,
+  TabNavigatorProps,
+} from "../navigation/NavigationTypes";
 import auth from "@react-native-firebase/auth";
-import Constants from "../utils/constants";
 import asyncStorage from "../storage";
 import { FirebaseUser } from "../types/types";
+import { showFirebaseMessage } from "../utils/TextUtils";
 
 const LoginScreen = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation<TabNavigatorProps>();
+  const navigationToMainScreen = useNavigation<TabNavigatorProps>();
+  const navigationToRegistration = useNavigation<RegistrationNavigationProps>();
 
   const navigateToHomeScreen = () => {
     setEmail("");
     setPassword("");
-    navigation.navigate("TabNavigator", {});
+    navigationToMainScreen.navigate("TabNavigator", {});
+  };
+
+  const navigateToRegistration = () => {
+    navigationToRegistration.navigate("Registration", {});
   };
 
   const signIn = () => {
@@ -34,9 +42,7 @@ const LoginScreen = () => {
         navigateToHomeScreen();
       })
       .catch((error) => {
-        if (error.code === Constants.LOGIN_ERROR) {
-          Alert.alert(t("error"), t("loginError"));
-        }
+        Alert.alert(t("error"), showFirebaseMessage(error.message));
         console.error(error);
       });
   };
@@ -59,7 +65,10 @@ const LoginScreen = () => {
         />
       </View>
       <GreenButton inputText={t("signIn")} action={signIn} />
-      <TouchableOpacity style={styles.textViewStyle}>
+      <TouchableOpacity
+        style={styles.textViewStyle}
+        onPress={navigateToRegistration}
+      >
         <Text style={styles.fontStyle}>{t("accountQuestion")}</Text>
         <Text
           style={[
@@ -69,7 +78,7 @@ const LoginScreen = () => {
             },
           ]}
         >
-          {t("signIn")}
+          {t("signUp")}
         </Text>
       </TouchableOpacity>
       <View style={styles.skipLoginViewStyle}>
@@ -81,7 +90,7 @@ const LoginScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   skipLoginViewStyle: {
     width: "100%",
     alignContent: "center",
@@ -106,7 +115,6 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     backgroundColor: primary.white,
     flex: 1,
-    justifyContent: "space-between",
   },
 });
 

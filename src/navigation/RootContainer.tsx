@@ -13,6 +13,7 @@ import { primary } from "../styles/styleGuide";
 import { Bag, Category, Home, Profile } from "../utils/svg";
 import { BottomTabParamList, MainParamList } from "./NavigationTypes";
 import LoginScreen from "../pages/LoginScreen";
+import RegistrationScreen from "../pages/RegistrationScreen";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const Stack = createStackNavigator<MainParamList>();
@@ -78,6 +79,11 @@ export default function RootContainer() {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Registration"
+          component={RegistrationScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

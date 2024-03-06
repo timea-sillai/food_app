@@ -21,5 +21,8 @@
   "skipLogin": "Skip login",
   "logOut": "Log out",
   "loginError": "Invalid email or password",
-  "error": "error"
+  "error": "Error",
+  "alreadyHaveAccount": "Already have an Account?",
+  "name": "Name",
+  "registrationError": "Registration cannot be successfull."
 }
