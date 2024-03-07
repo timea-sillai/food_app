@@ -1,4 +1,5 @@
 export const primary = {
+  red: "red",
   green: "#40AA54",
   white: "#FFFFFF",
   light_green: "#F1FFF4",

@@ -16,6 +16,7 @@ import auth from "@react-native-firebase/auth";
 import asyncStorage from "../storage";
 import { FirebaseUser } from "../types/types";
 import { showFirebaseMessage } from "../utils/TextUtils";
+import Constants from "../utils/constants";
 
 const LoginScreen = () => {
   const { t } = useTranslation();
@@ -50,18 +51,22 @@ const LoginScreen = () => {
   return (
     <View style={styles.mainViewStyle}>
       <Image source={require("../../assets/images/splash_image.png")} />
-      <Text style={generalStyles.titleStyle}>{t("signIn")}</Text>
+      <Text style={styles.titleStyle}>{t("signIn")}</Text>
       <View>
         <AppTextInput
           onChangeText={(text: string) => setEmail(text)}
           label={t("email")}
           value={email}
+          errorMessage={t("emailError")}
+          validationRegex={Constants.EMAIL_REGEX}
         />
         <AppTextInput
           onChangeText={(text: string) => setPassword(text)}
           label={t("password")}
           value={password}
           isPassword={true}
+          errorMessage={t("passwordError")}
+          validationRegex={Constants.PASSWORD_REGEX}
         />
       </View>
       <GreenButton inputText={t("signIn")} action={signIn} />
@@ -91,6 +96,10 @@ const LoginScreen = () => {
 };
 
 export const styles = StyleSheet.create({
+  titleStyle: {
+    ...generalStyles.titleStyle,
+    marginBottom: paddings.padding_16,
+  },
   skipLoginViewStyle: {
     width: "100%",
     alignContent: "center",

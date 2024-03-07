@@ -24,5 +24,8 @@
   "error": "Error",
   "alreadyHaveAccount": "Already have an Account?",
   "name": "Name",
-  "registrationError": "Registration cannot be successfull."
+  "registrationError": "Registration cannot be successfull.",
+  "emailError": "Please enter a valid email",
+  "passwordError": "Password must be at least 8 characters long.",
+  "emptyTextError": "This field cannot be empty"
 }

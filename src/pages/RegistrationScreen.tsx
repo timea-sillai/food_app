@@ -23,8 +23,8 @@ import { styles } from "./LoginScreen";
 import auth from "@react-native-firebase/auth";
 import asyncStorage from "../storage";
 import { FirebaseUser } from "../types/types";
-import Constants from "../utils/constants";
 import { showFirebaseMessage } from "../utils/TextUtils";
+import Constants from "../utils/constants";
 
 const RegistrationScreen = () => {
   const { t } = useTranslation();
@@ -63,7 +63,7 @@ const RegistrationScreen = () => {
       signIn();
     } catch (error) {
       Alert.alert(t("error"), showFirebaseMessage(error.message));
-      console.error(e);
+      console.error(error);
     }
   };
 
@@ -83,26 +83,31 @@ const RegistrationScreen = () => {
   return (
     <View style={styles.mainViewStyle}>
       <Image source={require("../../assets/images/registration.png")} />
-      <Text style={generalStyles.titleStyle}>{t("signUp")}</Text>
+      <Text style={styles.titleStyle}>{t("signUp")}</Text>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
       >
         <AppTextInput
           onChangeText={(text: string) => setName(text)}
           label={t("name")}
           value={name}
+          errorMessage={t("emptyTextError")}
+          validationRegex={Constants.NOT_EMPTY_TEXT_REGEX}
         />
         <AppTextInput
           onChangeText={(text: string) => setEmail(text)}
           label={t("email")}
           value={email}
+          errorMessage={t("emailError")}
+          validationRegex={Constants.EMAIL_REGEX}
         />
         <AppTextInput
           onChangeText={(text: string) => setPassword(text)}
           label={t("password")}
           value={password}
           isPassword={true}
+          errorMessage={t("passwordError")}
+          validationRegex={Constants.PASSWORD_REGEX}
         />
       </KeyboardAvoidingView>
       <GreenButton inputText={t("signUp")} action={register} />

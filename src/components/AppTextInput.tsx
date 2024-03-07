@@ -12,34 +12,78 @@ interface AppTextInputProps {
   value: string;
   label: string;
   isPassword?: boolean;
+  errorMessage?: string;
+  validationRegex?: RegExp;
+  isValid?: boolean;
 }
 
 const AppTextInput: React.FC<AppTextInputProps> = (props) => {
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
   const togglePasswordVisibility = () => {
     setPasswordVisibility((isPasswordVisiblePrev) => !isPasswordVisiblePrev);
   };
+
+  const validateInput = (input: string) => {
+    if (props.validationRegex) {
+      const isValid = props.validationRegex.test(input);
+      setIsValid(isValid);
+      if (!isValid) {
+        setValidationMessage(props.errorMessage ?? "");
+      } else {
+        setValidationMessage("");
+      }
+    }
+  };
+
   return (
-    <View style={{}}>
-      <TextInput
-        style={[props.style, styles.textInput]}
-        onChangeText={props.onChangeText}
-        value={props.value}
-        secureTextEntry={props.isPassword && !isPasswordVisible}
-      />
-      {props.isPassword && (
-        <View style={styles.passwordImageStyle}>
-          <TouchableOpacity onPress={togglePasswordVisibility}>
-            <SeePassword width={20} height={20} />
-          </TouchableOpacity>
-        </View>
-      )}
-      <Text style={styles.labelStyle}>{props.label}</Text>
+    <View>
+      <View>
+        <TextInput
+          style={[
+            props.style,
+            styles.textInput,
+            {
+              borderColor: isValid ? primary.grayD7 : primary.red,
+            },
+          ]}
+          onChangeText={(text) => {
+            props.onChangeText(text);
+            validateInput(text);
+          }}
+          value={props.value}
+          onEndEditing={() => validateInput(props.value)}
+          secureTextEntry={props.isPassword && !isPasswordVisible}
+        />
+        {props.isPassword && (
+          <View style={styles.passwordImageStyle}>
+            <TouchableOpacity onPress={togglePasswordVisibility}>
+              <SeePassword width={20} height={20} />
+            </TouchableOpacity>
+          </View>
+        )}
+        <Text
+          style={[
+            styles.labelStyle,
+            { color: isValid ? primary.grayA3 : primary.red },
+          ]}
+        >
+          {props.label}
+        </Text>
+      </View>
+      <Text style={styles.errorStyle}>{validationMessage}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  errorStyle: {
+    color: primary.red,
+    marginHorizontal: paddings.padding_16,
+    alignSelf: "flex-end",
+  },
   passwordImageStyle: {
     right: 0,
     marginTop: paddings.padding_20,
@@ -49,7 +93,6 @@ const styles = StyleSheet.create({
   textInput: {
     ...generalStyles.fontStyle,
     height: 48,
-    borderColor: primary.grayD7,
     borderWidth: 1,
     borderRadius: 5,
     marginVertical: paddings.padding_10,
@@ -61,7 +104,6 @@ const styles = StyleSheet.create({
     marginHorizontal: paddings.padding_30,
     backgroundColor: primary.white,
     position: "absolute",
-    color: primary.grayA3,
     fontSize: 16,
     paddingHorizontal: paddings.padding_8,
   },
