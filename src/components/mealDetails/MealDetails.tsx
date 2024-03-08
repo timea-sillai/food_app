@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Text, View, Linking, StyleSheet } from "react-native";
 import { Meal } from "../../types/types";
-import AddToFavourites from "./AddToFavourites";
+import AddToFavourites, { FavouritesDetails } from "./AddToFavourites";
 import { paddings } from "../../styles/branding";
 import { generalStyles } from "../../styles/generalStyleSheet";
 import { primary } from "../../styles/styleGuide";
+import Loading from "../Loading";
 
 interface MealDetailsViewProps {
   mealDetails: Meal | undefined;
@@ -23,6 +24,12 @@ interface VideoDetailsProps {
 
 const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
   const mealDetails = props.mealDetails;
+  const favouritesDetails: FavouritesDetails = {
+    strMealThumb: mealDetails?.strMealThumb ?? "",
+    strMeal: mealDetails?.strMeal ?? "",
+    idMeal: mealDetails?.idMeal ?? "",
+  };
+
   const Details: React.FC<DetailsProps> = (props) => {
     const mealDetails = props.mealDetails;
     const { t } = useTranslation();
@@ -80,11 +87,18 @@ const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
 
   return (
     <View style={styles.mainView}>
-      <View style={styles.favouritesStyle}>
-        <AddToFavourites />
-      </View>
-      <Details mealDetails={mealDetails} />
-      <VideoDetails videoUrl={mealDetails?.strYoutube} />
+      {props.isLoading ? (
+        <Loading style={styles.loading} />
+      ) : (
+        <>
+          <AddToFavourites
+            meal={favouritesDetails}
+            style={styles.favouritesStyle}
+          />
+          <Details mealDetails={mealDetails} />
+          <VideoDetails videoUrl={mealDetails?.strYoutube} />
+        </>
+      )}
     </View>
   );
 };
@@ -92,6 +106,12 @@ const MealDetailsView: React.FC<MealDetailsViewProps> = (props) => {
 export default MealDetailsView;
 
 const styles = StyleSheet.create({
+  loading: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    flex: 1,
+  },
   subtitle: {
     ...generalStyles.fontStyle,
     marginVertical: 0,

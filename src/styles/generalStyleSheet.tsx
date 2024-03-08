@@ -13,7 +13,7 @@ export const generalStyles = StyleSheet.create({
   },
   mainViewStyle: {
     flex: 1,
-    marginTop: Platform.OS === "ios" ? 30 : 0,
+    paddingTop: Platform.OS === "ios" ? 30 : 0,
     backgroundColor: primary.light_green,
   },
   backgroundStyle: {

@@ -7,6 +7,7 @@ import { Meal } from "../../types/types";
 import MealDetailsView from "./MealDetails";
 import MealDetailsBackground from "./MealDetailsBackground";
 import MealDetailsImage from "./MealDetailsImage";
+import { View } from "react-native";
 
 const MealDetails: FunctionComponent<MealDetailsProps> = ({
   route,
@@ -34,11 +35,13 @@ const MealDetails: FunctionComponent<MealDetailsProps> = ({
   }, []);
 
   return (
-    <ScrollView style={[generalStyles.mainViewStyle]}>
-      <MealDetailsBackground />
-      <MealDetailsView mealDetails={mealDetails} isLoading={isLoading} />
-      <MealDetailsImage mealImage={mealDetails?.strMealThumb} />
-    </ScrollView>
+    <View style={generalStyles.mainViewStyle}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <MealDetailsBackground />
+        <MealDetailsView mealDetails={mealDetails} isLoading={isLoading} />
+        <MealDetailsImage mealImage={mealDetails?.strMealThumb} />
+      </ScrollView>
+    </View>
   );
 };
 
