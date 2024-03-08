@@ -10,7 +10,6 @@ export type MainParamList = {
   MealDetails: {
     mealId: string;
   };
-  Login: {};
   Registration: {};
 };
 

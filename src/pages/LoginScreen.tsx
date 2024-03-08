@@ -18,7 +18,12 @@ import { FirebaseUser } from "../types/types";
 import { showFirebaseMessage } from "../utils/TextUtils";
 import Constants from "../utils/constants";
 
-const LoginScreen = () => {
+export interface LoginScreenProps {
+  hideSkipLogin?: boolean;
+  onLoginSuccess?: () => void;
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = (props) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +33,9 @@ const LoginScreen = () => {
   const navigateToHomeScreen = () => {
     setEmail("");
     setPassword("");
-    navigationToMainScreen.navigate("TabNavigator", {});
+    if (props.onLoginSuccess != undefined) {
+      props.onLoginSuccess();
+    } else navigationToMainScreen.navigate("TabNavigator", {});
   };
 
   const navigateToRegistration = () => {
@@ -40,6 +47,7 @@ const LoginScreen = () => {
       .signInWithEmailAndPassword(email, password)
       .then((firebaseUser: FirebaseUser) => {
         asyncStorage.storeUserId(firebaseUser.user.uid);
+        props.isUserLoggedIn = true;
         navigateToHomeScreen();
       })
       .catch((error) => {
@@ -86,11 +94,14 @@ const LoginScreen = () => {
           {t("signUp")}
         </Text>
       </TouchableOpacity>
-      <View style={styles.skipLoginViewStyle}>
-        <TouchableOpacity onPress={navigateToHomeScreen}>
-          <Text style={styles.skipLogin}>{t("skipLogin")}</Text>
-        </TouchableOpacity>
-      </View>
+
+      {!props.hideSkipLogin && (
+        <View style={styles.skipLoginViewStyle}>
+          <TouchableOpacity onPress={navigateToHomeScreen}>
+            <Text style={styles.skipLogin}>{t("skipLogin")}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

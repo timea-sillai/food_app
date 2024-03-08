@@ -25,6 +25,8 @@ import asyncStorage from "../storage";
 import { FirebaseUser } from "../types/types";
 import { showFirebaseMessage } from "../utils/TextUtils";
 import Constants from "../utils/constants";
+import TransparentToolbar from "../components/TransparentToolbar";
+import { paddings } from "../styles/branding";
 
 const RegistrationScreen = () => {
   const { t } = useTranslation();
@@ -83,6 +85,11 @@ const RegistrationScreen = () => {
   return (
     <View style={styles.mainViewStyle}>
       <Image source={require("../../assets/images/registration.png")} />
+      <TransparentToolbar
+        style={{ position: "absolute", marginTop: paddings.padding_30 }}
+        showBackButton={true}
+        title=""
+      />
       <Text style={styles.titleStyle}>{t("signUp")}</Text>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

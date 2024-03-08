@@ -12,11 +12,11 @@ import {
 } from "react-native";
 import { CategoryDetailsNavigationProps } from "../navigation/NavigationTypes";
 import mealService from "../services";
-import { paddings } from "../styles/branding";
 import { primary } from "../styles/styleGuide";
 import { Category, FetchCategoriesResponse } from "../types/types";
-import Loading from "./Loading";
 import ListHeader from "./ListHeader";
+import Loading from "./Loading";
+import RoundImageContainer from "./RoundImageContainer";
 
 interface HomeScreenCategoriesProps {
   style?: ViewStyle;
@@ -69,12 +69,7 @@ const HomeScreenCategories: React.FC<HomeScreenCategoriesProps> = (props) => {
           <View style={styles.textItemViewStyle}>
             <Text style={styles.text}>{item.strCategory}</Text>
           </View>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: item.strCategoryThumb }}
-              style={styles.image}
-            />
-          </View>
+          <RoundImageContainer uri={item.strCategoryThumb} />
         </View>
       </TouchableOpacity>
     );
@@ -135,22 +130,6 @@ const styles = StyleSheet.create({
     width: "100%",
     color: primary.black,
     alignSelf: "center",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-  },
-  imageContainer: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    overflow: "hidden",
-    backgroundColor: primary.white,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: primary.greenDO,
-    borderWidth: 5,
   },
   categoryBackgroundStyle: {
     top: 0,

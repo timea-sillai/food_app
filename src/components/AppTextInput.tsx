@@ -53,6 +53,7 @@ const AppTextInput: React.FC<AppTextInputProps> = (props) => {
             props.onChangeText(text);
             validateInput(text);
           }}
+          autoCapitalize="none"
           value={props.value}
           onEndEditing={() => validateInput(props.value)}
           secureTextEntry={props.isPassword && !isPasswordVisible}

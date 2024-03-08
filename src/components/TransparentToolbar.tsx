@@ -1,9 +1,11 @@
 import React from "react";
 import {
   BackHandler,
+  StyleProp,
   StyleSheet,
   Text,
   View,
+  ViewStyle,
   useWindowDimensions,
 } from "react-native";
 import { generalStyles } from "../styles/generalStyleSheet";
@@ -15,6 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 interface TransparentToolbarProps {
   showBackButton: boolean;
   title: string;
+  style?: ViewStyle;
 }
 
 const TransparentToolbar: React.FC<TransparentToolbarProps> = (props) => {
@@ -24,7 +27,7 @@ const TransparentToolbar: React.FC<TransparentToolbarProps> = (props) => {
     navigation.goBack();
   };
   return (
-    <View style={style.mainView}>
+    <View style={[style.mainView, props.style]}>
       {props.showBackButton && (
         <TouchableOpacity onPress={onBackPressed}>
           <Back style={style.buttonStyle} width={30} height={30} />

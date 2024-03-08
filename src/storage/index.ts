@@ -102,7 +102,6 @@ class AsyncStorageManager {
 
   async getFavouritesJson(): Promise<string | null> {
     const userId = await AsyncStorage.getItem(StorageKeys.USER_ID);
-    console.log("get", userId);
     if (userId == null) {
       //case for unlogged users
       return AsyncStorage.getItem(StorageKeys.UNLOGGED_USERS_FAVOURITES_KEY);
@@ -127,6 +126,15 @@ class AsyncStorageManager {
     try {
       await AsyncStorage.setItem(StorageKeys.USER_ID, userId.toString());
       return true;
+    } catch (e) {
+      console.error("Error saving user id", e);
+      return false;
+    }
+  }
+  async isUserLoggedIn(): Promise<boolean> {
+    try {
+      const id = await AsyncStorage.getItem(StorageKeys.USER_ID);
+      return id != null && id != undefined;
     } catch (e) {
       console.error("Error saving user id", e);
       return false;
